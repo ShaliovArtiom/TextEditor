@@ -1,4 +1,4 @@
-import BackGround.SimpleFrame;
+import Menu.MenuFrame;
 
 import javax.swing.*;
 /**
@@ -7,9 +7,9 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] argc)
     {
-        SimpleFrame frame = new SimpleFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        MenuFrame frame1 = new MenuFrame();
+        frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame1.setVisible(true);
 
     }
 }
