@@ -7,9 +7,10 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] argc)
     {
-        MenuFrame frame1 = new MenuFrame();
-        frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame1.setVisible(true);
+        MenuFrame frame = new MenuFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+
 
     }
 }

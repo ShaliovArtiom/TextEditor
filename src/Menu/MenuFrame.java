@@ -1,47 +1,89 @@
 package Menu;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 
 /**
  * Created by TyZiK on 20.02.2016.
  */
+
 public class MenuFrame extends JFrame {
-    public MenuFrame()
-    {
+    public MenuFrame() {
+
+        toolBar = new JPanel();
+
+        Action copyActhion = new AbstractAction("Copy", new ImageIcon("copy.jpeg")) {
+            public void actionPerformed(ActionEvent e) {
+            }
+        };
+
+        copyActhion.putValue(Action.SHORT_DESCRIPTION, "Copy your text");
+
+        Action cutActhion = new AbstractAction("Cut", new ImageIcon("cut.jpeg")) {
+            public void actionPerformed(ActionEvent e) {
+            }
+        };
+
+        cutActhion.putValue(Action.SHORT_DESCRIPTION, "Cut your text");
+
+        Action pasteActhion = new AbstractAction("Paste", new ImageIcon("paste.jpeg")) {
+            public void actionPerformed(ActionEvent e) {
+            }
+        };
+
+        pasteActhion.putValue(Action.SHORT_DESCRIPTION, "Pastte your text");
+
+
+        JToolBar bar = new JToolBar();
+        bar.add(copyActhion);
+        bar.addSeparator();
+        bar.add(pasteActhion);
+        bar.addSeparator();
+        bar.add(cutActhion);
+        add(bar, BorderLayout.NORTH);
+
+        JMenu menu1 = new JMenu("Bar");
+        menu1.add(copyActhion);
+        menu1.add(cutActhion);
+        menu1.add(pasteActhion);
+        JMenuBar menuBar1 = new JMenuBar();
+        menuBar1.add(menu1);
+        setJMenuBar(menuBar1);
+        setJMenuBar(menuBar1);
+
+        //end Tool Bar
+
+
         setTitle("TextEditor");
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
         JMenu fileMenu = new JMenu("File");
         JMenuItem newItem = fileMenu.add(new TestAction("New"));
-
         JMenuItem openItem = fileMenu.add(new TestAction("Open"));
-        openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
-
         fileMenu.addSeparator();
 
         saveAction = new TestAction("Save");
         JMenuItem saveItem = fileMenu.add(saveAction);
-        saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 
         saveAsAction = new TestAction("Save As");
         JMenuItem saveAsItem = fileMenu.add(saveAsAction);
-        fileMenu.addSeparator();
+        fileMenu.addSeparator(); // Разделитель
 
         fileMenu.add(new AbstractAction("Exit") {
 
-            public void actionPerformed(ActionEvent event)
-            {
+            public void actionPerformed(ActionEvent event) {
                 System.exit(0);
 
             }
         });
 
         readonlyItem = new JCheckBoxMenuItem("Read-only");
-        readonlyItem.addActionListener(new ActionListener(){
+        readonlyItem.addActionListener(new ActionListener() {
 
-            public void actionPerformed(ActionEvent event)
-            {
+            public void actionPerformed(ActionEvent event) {
                 boolean saveOk = !readonlyItem.isSelected();
                 saveAction.setEnabled(saveOk);
                 saveAsAction.setEnabled(saveOk);
@@ -97,6 +139,8 @@ public class MenuFrame extends JFrame {
         menuBar.add(editMenu);
         menuBar.add(helpMenu);
 
+
+        // Всплывающее меню(от правой кнопки мыши)
         popup = new JPopupMenu();
         popup.add(cutAction);
         popup.add(copyAction);
@@ -107,15 +151,19 @@ public class MenuFrame extends JFrame {
         add(panel);
 
         panel.addMouseListener(new MouseAdapter() {});
-    }
 
+
+    }
     private  Action saveAction;
     private  Action saveAsAction;
     private  JCheckBoxMenuItem readonlyItem;
     private  JPopupMenu popup;
+    private JPanel toolBar;
+    private JComboBox face;
 
     public static final int DEFAULT_HEIGHT = 600;
     public static final int DEFAULT_WIDTH = 800;
+
 }
 
 class TestAction extends AbstractAction
