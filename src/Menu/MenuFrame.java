@@ -15,6 +15,7 @@ public class MenuFrame extends JFrame {
 
         toolBar = new JPanel();
 
+
         Action copyActhion = new AbstractAction("Copy", new ImageIcon("copy.jpeg")) {
             public void actionPerformed(ActionEvent e) {
             }
@@ -36,6 +37,32 @@ public class MenuFrame extends JFrame {
 
         pasteActhion.putValue(Action.SHORT_DESCRIPTION, "Pastte your text");
 
+        int w = getSize().width;
+        int h = getSize().height;
+        String[] sizeOfWord = new String[]{"2" , "4" , "8" , "10" , "12" ,"14" , "16" ,"18" , "20" , "22" , "24" , "26" };
+        JComboBox comboSize = new JComboBox(sizeOfWord);
+
+        comboSize.setSelectedIndex(1);
+
+        String[] stillOfWord = new String[]{"Still 1","Still2" };
+        JComboBox comboStill = new JComboBox(stillOfWord);
+        comboStill.setSelectedIndex(1);
+
+        Action fattyActhion = new AbstractAction("fatty", new ImageIcon("fatty.jpeg")) {
+            public void actionPerformed(ActionEvent e) {
+            }
+        };
+
+        Action italicsActhion = new AbstractAction("italics", new ImageIcon("italics.jpeg")) {
+            public void actionPerformed(ActionEvent e) {
+            }
+        };
+
+
+        Action underlinedActhion = new AbstractAction("underlined", new ImageIcon("underlined.jpeg")) {
+            public void actionPerformed(ActionEvent e) {
+            }
+        };
 
         JToolBar bar = new JToolBar();
         bar.add(copyActhion);
@@ -43,15 +70,19 @@ public class MenuFrame extends JFrame {
         bar.add(pasteActhion);
         bar.addSeparator();
         bar.add(cutActhion);
+        bar.addSeparator();
+        bar.add(comboSize);
+        bar.add(comboStill);
+        bar.addSeparator();
+        bar.add(fattyActhion);
+        bar.add(italicsActhion);
+        bar.add(underlinedActhion);
         add(bar, BorderLayout.NORTH);
 
+
         JMenu menu1 = new JMenu("Bar");
-        menu1.add(copyActhion);
-        menu1.add(cutActhion);
-        menu1.add(pasteActhion);
         JMenuBar menuBar1 = new JMenuBar();
         menuBar1.add(menu1);
-        setJMenuBar(menuBar1);
         setJMenuBar(menuBar1);
 
         //end Tool Bar
