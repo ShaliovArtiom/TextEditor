@@ -39,7 +39,8 @@ public class MenuFrame extends JFrame {
 
         int w = getSize().width;
         int h = getSize().height;
-        String[] sizeOfWord = new String[]{"2" , "4" , "8" , "10" , "12" ,"14" , "16" ,"18" , "20" , "22" , "24" , "26" };
+        String[] sizeOfWord = new String[]{"8" , "9" , "10" , "11" ,"12" , "13" ,"14" , "16" , "18" , "20" , "22" ,
+                "24" , "26" , "28" , "36", "48" , "72"};
         JComboBox comboSize = new JComboBox(sizeOfWord);
 
         comboSize.setSelectedIndex(1);
