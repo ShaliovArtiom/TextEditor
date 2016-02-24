@@ -17,8 +17,20 @@ public class MenuFrame extends JFrame {
         setTitle("TextEditor");
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
-        JTextPane jtp = new JTextPane();
-        add(jtp, BorderLayout.CENTER);
+        //JTextPane jtp = new JTextPane();
+        //add(jtp, BorderLayout.CENTER);
+
+        //JTextField jtf = new JTextField();
+        //add(jtf, BorderLayout.CENTER);
+
+        JTextArea jta = new JTextArea();
+        add(jta, BorderLayout.CENTER);
+s
+        JPanel panel = new JPanel();
+        add(panel, BorderLayout.EAST);
+
+        JPanel panel2 = new JPanel();
+        add(panel2, BorderLayout.WEST);
 
         JMenu fileMenu = new JMenu("File");
         JMenuItem newItem = fileMenu.add(new TestAction("New"));
@@ -95,8 +107,8 @@ public class MenuFrame extends JFrame {
         popup.add(copyAction);
         popup.add(pasteAction);
 
-        jtp.setComponentPopupMenu(popup);
-        jtp.addMouseListener(new MouseAdapter() {});
+        jta.setComponentPopupMenu(popup);
+        jta.addMouseListener(new MouseAdapter() {});
 
         //toolbar
 
