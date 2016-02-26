@@ -3,19 +3,17 @@ package Menu;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.Color;
+
 
 /**
  * Created by TyZiK on 20.02.2016.
  */
 
-public class MenuFrame extends JFrame {
-    public MenuFrame() {
-        //menu
+public class MenuFrame{
+    public MenuFrame(JFrame frame) {
 
-        setTitle("TextEditor");
-        setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-
+        frame.setTitle("TextEditor");
+        frame.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         //JTextPane jtp = new JTextPane();
         //add(jtp, BorderLayout.CENTER);
 
@@ -25,25 +23,32 @@ public class MenuFrame extends JFrame {
        //JTextArea jta = new JTextArea();
         //add(jta, BorderLayout.CENTER);
 
-        //JComponent jc = new JComponent(){};
+      //  JComponent jc = new JComponent(){
+
+        //    WordScan word = new WordScan();
+        //};
+        //jc.setBackground(Color.WHITE);
         //add(jc, BorderLayout.CENTER);
 
         JPanel pl = new JPanel();
         pl.setBackground(Color.WHITE);
-        add(pl, BorderLayout.CENTER);
+        frame.add(pl, BorderLayout.CENTER);
+
 
         JPanel panel = new JPanel();
-        add(panel, BorderLayout.EAST);
+        frame.add(panel, BorderLayout.EAST);
 
         JPanel panel2 = new JPanel();
-        add(panel2, BorderLayout.WEST);
+        frame.add(panel2, BorderLayout.WEST);
+
 
         JMenuBar menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
+        frame.setJMenuBar(menuBar);
 
         JMenu fileMenu = new JMenu("File");
         fileMenu.setMnemonic('F');
         JMenuItem newItem = fileMenu.add(new TestAction("New"));
+        newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
         JMenuItem openItem = fileMenu.add(new TestAction("Open"));
         openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
         fileMenu.addSeparator();
@@ -59,12 +64,12 @@ public class MenuFrame extends JFrame {
         fileMenu.add(new AbstractAction("Exit") {
 
             public void actionPerformed(ActionEvent event) {
-                System.exit(0);
+               System.exit(0);
 
             }
-
-
         });
+
+
 
         readonlyItem = new JCheckBoxMenuItem("Read-only");
         readonlyItem.addActionListener(new ActionListener() {
@@ -149,7 +154,7 @@ public class MenuFrame extends JFrame {
         JComboBox comboSize = new JComboBox(sizeOfWord);
         comboSize.setSelectedIndex(1);
 
-        String[] stillOfWord = new String[]{"Still 1","Still2" };
+        String[] stillOfWord = new String[]{"Still 1","Still2", "Still3" };
         JComboBox comboStill = new JComboBox(stillOfWord);
         comboStill.setSelectedIndex(1);
 
@@ -170,7 +175,7 @@ public class MenuFrame extends JFrame {
         };
 
         JToolBar bar = new JToolBar();
-        add(bar, BorderLayout.NORTH);
+        frame.add(bar, BorderLayout.NORTH);
         bar.add(copyActhion);
         bar.addSeparator();
         bar.add(pasteActhion);
@@ -186,11 +191,11 @@ public class MenuFrame extends JFrame {
         bar.add(underlinedActhion);
 
     }
+
     private  Action saveAction;
     private  Action saveAsAction;
     private  JCheckBoxMenuItem readonlyItem;
     private  JPopupMenu popup;
-
 
     public static final int DEFAULT_HEIGHT = 600;
     public static final int DEFAULT_WIDTH = 800;

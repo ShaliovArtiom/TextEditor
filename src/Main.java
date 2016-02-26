@@ -8,12 +8,13 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] argc)
     {
-        MenuFrame menu = new MenuFrame();
-        menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menu.setVisible(true);
-
+        JFrame frame = new JFrame();
+        new MenuFrame(frame);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
 
     }
 
 
 }
+
