@@ -2,9 +2,8 @@ package Menu;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
+import java.awt.event.*;
+import java.awt.Color;
 
 /**
  * Created by TyZiK on 20.02.2016.
@@ -23,22 +22,35 @@ public class MenuFrame extends JFrame {
         //JTextField jtf = new JTextField();
         //add(jtf, BorderLayout.CENTER);
 
-        JTextArea jta = new JTextArea();
-        add(jta, BorderLayout.CENTER);
-s
+       //JTextArea jta = new JTextArea();
+        //add(jta, BorderLayout.CENTER);
+
+        //JComponent jc = new JComponent(){};
+        //add(jc, BorderLayout.CENTER);
+
+        JPanel pl = new JPanel();
+        pl.setBackground(Color.WHITE);
+        add(pl, BorderLayout.CENTER);
+
         JPanel panel = new JPanel();
         add(panel, BorderLayout.EAST);
 
         JPanel panel2 = new JPanel();
         add(panel2, BorderLayout.WEST);
 
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+
         JMenu fileMenu = new JMenu("File");
+        fileMenu.setMnemonic('F');
         JMenuItem newItem = fileMenu.add(new TestAction("New"));
         JMenuItem openItem = fileMenu.add(new TestAction("Open"));
+        openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
         fileMenu.addSeparator();
 
         saveAction = new TestAction("Save");
         JMenuItem saveItem = fileMenu.add(saveAction);
+        saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 
         saveAsAction = new TestAction("Save As");
         JMenuItem saveAsItem = fileMenu.add(saveAsAction);
@@ -71,6 +83,7 @@ s
         Action pasteAction = new TestAction("Paste");
 
         JMenu editMenu = new JMenu("Edit");
+        editMenu.setMnemonic('E');
         editMenu.add(cutAction);
         editMenu.add(copyAction);
         editMenu.add(pasteAction);
@@ -87,15 +100,10 @@ s
         helpMenu.setMnemonic('H');
 
         JMenuItem indexItem = new JMenu("Index");
-        indexItem.setMnemonic('I');
         helpMenu.add(indexItem);
 
         JMenuItem aboutItem = new JMenu("About");
-        indexItem.setMnemonic('A');
         helpMenu.add(aboutItem);
-
-        JMenuBar menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
 
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
@@ -107,8 +115,9 @@ s
         popup.add(copyAction);
         popup.add(pasteAction);
 
-        jta.setComponentPopupMenu(popup);
-        jta.addMouseListener(new MouseAdapter() {});
+        pl.setComponentPopupMenu(popup);
+        pl.addMouseListener(new MouseAdapter() {
+        });
 
         //toolbar
 
@@ -161,6 +170,7 @@ s
         };
 
         JToolBar bar = new JToolBar();
+        add(bar, BorderLayout.NORTH);
         bar.add(copyActhion);
         bar.addSeparator();
         bar.add(pasteActhion);
@@ -168,19 +178,19 @@ s
         bar.add(cutActhion);
         bar.addSeparator();
         bar.add(comboSize);
+        bar.addSeparator();
         bar.add(comboStill);
         bar.addSeparator();
         bar.add(fattyActhion);
         bar.add(italicsActhion);
         bar.add(underlinedActhion);
-        add(bar, BorderLayout.NORTH);
 
     }
     private  Action saveAction;
     private  Action saveAsAction;
     private  JCheckBoxMenuItem readonlyItem;
     private  JPopupMenu popup;
-    private JComboBox face;
+
 
     public static final int DEFAULT_HEIGHT = 600;
     public static final int DEFAULT_WIDTH = 800;
