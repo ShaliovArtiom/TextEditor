@@ -41,91 +41,6 @@ public class MenuFrame{
         JPanel panel2 = new JPanel();
         frame.add(panel2, BorderLayout.WEST);
 
-
-        JMenuBar menuBar = new JMenuBar();
-        frame.setJMenuBar(menuBar);
-
-        JMenu fileMenu = new JMenu("File");
-        fileMenu.setMnemonic('F');
-        JMenuItem newItem = fileMenu.add(new TestAction("New"));
-        newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
-        JMenuItem openItem = fileMenu.add(new TestAction("Open"));
-        openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
-        fileMenu.addSeparator();
-
-        saveAction = new TestAction("Save");
-        JMenuItem saveItem = fileMenu.add(saveAction);
-        saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
-
-        saveAsAction = new TestAction("Save As");
-        JMenuItem saveAsItem = fileMenu.add(saveAsAction);
-        fileMenu.addSeparator(); // Разделитель
-
-        fileMenu.add(new AbstractAction("Exit") {
-
-            public void actionPerformed(ActionEvent event) {
-               System.exit(0);
-
-            }
-        });
-
-
-
-        readonlyItem = new JCheckBoxMenuItem("Read-only");
-        readonlyItem.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent event) {
-                boolean saveOk = !readonlyItem.isSelected();
-                saveAction.setEnabled(saveOk);
-                saveAsAction.setEnabled(saveOk);
-
-            }
-        });
-
-
-        Action cutAction = new TestAction("Cut");
-        Action copyAction = new TestAction("Copy");
-        Action pasteAction = new TestAction("Paste");
-
-        JMenu editMenu = new JMenu("Edit");
-        editMenu.setMnemonic('E');
-        editMenu.add(cutAction);
-        editMenu.add(copyAction);
-        editMenu.add(pasteAction);
-
-
-        JMenu optionMenu = new JMenu("Options");
-
-        optionMenu.add(readonlyItem);
-
-        editMenu.addSeparator();
-        editMenu.add(optionMenu);
-
-        JMenu helpMenu = new JMenu("Help");
-        helpMenu.setMnemonic('H');
-
-        JMenuItem indexItem = new JMenu("Index");
-        helpMenu.add(indexItem);
-
-        JMenuItem aboutItem = new JMenu("About");
-        helpMenu.add(aboutItem);
-
-        menuBar.add(fileMenu);
-        menuBar.add(editMenu);
-        menuBar.add(helpMenu);
-
-        // Всплывающее меню(от правой кнопки мыши)
-        popup = new JPopupMenu();
-        popup.add(cutAction);
-        popup.add(copyAction);
-        popup.add(pasteAction);
-
-        pl.setComponentPopupMenu(popup);
-        pl.addMouseListener(new MouseAdapter() {
-        });
-
-        //toolbar
-
         Action copyActhion = new AbstractAction("Copy", new ImageIcon("copy.jpeg")) {
             public void actionPerformed(ActionEvent e) {
 
@@ -147,7 +62,62 @@ public class MenuFrame{
             }
         };
 
+
+        JMenuBar menuBar = new JMenuBar();
+        frame.setJMenuBar(menuBar);
+
+        JMenu fileMenu = new JMenu("File");
+        fileMenu.setMnemonic('F');
+        JMenuItem newItem = fileMenu.add(new TestAction("New"));
+        newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
+
+        JMenuItem openItem = fileMenu.add(new TestAction("Open"));
+        openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
+        fileMenu.addSeparator();
+
+        saveAction = new TestAction("Save");
+        JMenuItem saveItem = fileMenu.add(saveAction);
+        saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+
+        fileMenu.add(new AbstractAction("Save As") {
+
+            public void actionPerformed(ActionEvent event) {
+            }
+        });
+
+        fileMenu.addSeparator();
+
+        fileMenu.add(new AbstractAction("Exit") {
+
+            public void actionPerformed(ActionEvent event) {
+               System.exit(0);
+
+            }
+        });
+
+        JMenu editMenu = new JMenu("Edit");
+        editMenu.setMnemonic('E');
+        editMenu.add(cutActhion);
+        editMenu.add(copyActhion);
+        editMenu.add(pasteActhion);
+
+
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+
+
         pasteActhion.putValue(Action.SHORT_DESCRIPTION, "Pastte your text");
+
+        popup = new JPopupMenu();
+        popup.add(cutActhion);
+        popup.add(copyActhion);
+        popup.add(pasteActhion);
+
+        pl.setComponentPopupMenu(popup);
+        pl.addMouseListener(new MouseAdapter() {
+        });
+
+
 
         String[] sizeOfWord = new String[]{"8" , "9" , "10" , "11" ,"12" , "13" ,"14" , "16" , "18" , "20" , "22" ,
                 "24" , "26" , "28" , "36", "48" , "72"};
@@ -194,8 +164,8 @@ public class MenuFrame{
 
     private  Action saveAction;
     private  Action saveAsAction;
-    private  JCheckBoxMenuItem readonlyItem;
     private  JPopupMenu popup;
+
 
     public static final int DEFAULT_HEIGHT = 600;
     public static final int DEFAULT_WIDTH = 800;
