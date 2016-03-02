@@ -1,46 +1,39 @@
 package Menu;
 
+import com.sun.glass.ui.CommonDialogs;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileFilter.*;
+import javax.swing.filechooser.*;
+import java.security.cert.Extension;
+import java.util.ArrayList;
 
 
 /**
  * Created by TyZiK on 20.02.2016.
  */
 
-public class MenuFrame{
+public class MenuFrame extends Component {
     public MenuFrame(JFrame frame) {
 
         frame.setTitle("TextEditor");
         frame.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        //JTextPane jtp = new JTextPane();
-        //add(jtp, BorderLayout.CENTER);
 
-        //JTextField jtf = new JTextField();
-        //add(jtf, BorderLayout.CENTER);
-
-       //JTextArea jta = new JTextArea();
-        //add(jta, BorderLayout.CENTER);
-
-      //  JComponent jc = new JComponent(){
-
-        //    WordScan word = new WordScan();
-        //};
-        //jc.setBackground(Color.WHITE);
-        //add(jc, BorderLayout.CENTER);
 
         JPanel pl = new JPanel();
         pl.setBackground(Color.WHITE);
         frame.add(pl, BorderLayout.CENTER);
 
 
-        JPanel panel = new JPanel();
+       /* JPanel panel = new JPanel();
         frame.add(panel, BorderLayout.EAST);
 
         JPanel panel2 = new JPanel();
         frame.add(panel2, BorderLayout.WEST);
-
+    */
         Action copyActhion = new AbstractAction("Copy", new ImageIcon("copy.jpeg")) {
             public void actionPerformed(ActionEvent e) {
 
@@ -71,26 +64,27 @@ public class MenuFrame{
         JMenuItem newItem = fileMenu.add(new TestAction("New"));
         newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
 
-        JMenuItem openItem = fileMenu.add(new TestAction("Open"));
+        JMenuItem openItem = new JMenuItem("Open");
+        fileMenu.add(openItem);
         openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
+        openItem.addActionListener(new FileOpenListener());
         fileMenu.addSeparator();
 
         saveAction = new TestAction("Save");
         JMenuItem saveItem = fileMenu.add(saveAction);
         saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 
-        fileMenu.add(new AbstractAction("Save As") {
+        saveAsAction = new TestAction("Save As");
+        JMenuItem saveAsItem = fileMenu.add(saveAsAction);
 
-            public void actionPerformed(ActionEvent event) {
-            }
-        });
+
 
         fileMenu.addSeparator();
 
         fileMenu.add(new AbstractAction("Exit") {
 
             public void actionPerformed(ActionEvent event) {
-               System.exit(0);
+                System.exit(0);
 
             }
         });
@@ -122,11 +116,17 @@ public class MenuFrame{
         String[] sizeOfWord = new String[]{"8" , "9" , "10" , "11" ,"12" , "13" ,"14" , "16" , "18" , "20" , "22" ,
                 "24" , "26" , "28" , "36", "48" , "72"};
         JComboBox comboSize = new JComboBox(sizeOfWord);
-        comboSize.setSelectedIndex(1);
+        comboSize.setEditable(true);
 
-        String[] stillOfWord = new String[]{"Still 1","Still2", "Still3" };
-        JComboBox comboStill = new JComboBox(stillOfWord);
-        comboStill.setSelectedIndex(1);
+
+        JComboBox comboStill = new JComboBox();
+
+        String [] stillOfWord = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        for(int i = 0; i < stillOfWord.length; i++)
+        {
+            comboStill.addItem( stillOfWord[i]);
+        }
+        comboStill.setEditable(true);
 
         Action fattyActhion = new AbstractAction("fatty", new ImageIcon("fatty.jpeg")) {
             public void actionPerformed(ActionEvent e) {
@@ -160,17 +160,78 @@ public class MenuFrame{
         bar.add(italicsActhion);
         bar.add(underlinedActhion);
 
+        chooser = new JFileChooser();
+        final ExtensionFileFilter filter = new ExtensionFileFilter();
+        filter.addExtension("txt");
+        filter.setDescription("Text files");
+        chooser.setFileFilter(filter);
+
     }
+
+
 
     private  Action saveAction;
     private  Action saveAsAction;
     private  JPopupMenu popup;
+    private JFileChooser chooser;
 
 
     public static final int DEFAULT_HEIGHT = 600;
     public static final int DEFAULT_WIDTH = 800;
 
+
+
+    private class FileOpenListener implements ActionListener {
+        public void actionPerformed(ActionEvent event)
+        {
+            chooser.setCurrentDirectory(new File("."));
+
+            int result = chooser.showOpenDialog(MenuFrame.this);
+
+            if(result == JFileChooser.APPROVE_OPTION)
+            {
+                String name = chooser.getSelectedFile().getPath();
+
+            }
+        }
+    }
 }
+
+class ExtensionFileFilter extends FileFilter {
+
+    public void addExtension(String extension)
+    {
+        if(!extension.startsWith("."))
+            extension = "." + extension;
+        extensions.add(extension.toLowerCase());
+
+    }
+
+    public void setDescription(String aDescription)
+    {
+        description = aDescription;
+
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public boolean accept(File f) {
+        if(f.isDirectory()) return true;
+        String name = f.getName().toLowerCase();
+        for(String extension : extensions)
+            if(name.endsWith(extension))
+                return true;
+        return false;
+    }
+
+    private String description = "";
+    private ArrayList<String> extensions = new ArrayList<String>();
+}
+
 
 class TestAction extends AbstractAction {
     public TestAction(String name) {
