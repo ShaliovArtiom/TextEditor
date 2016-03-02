@@ -1,13 +1,22 @@
 package Menu;
 
 import com.sun.glass.ui.CommonDialogs;
+import org.omg.CORBA.BAD_INV_ORDER;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.*;
+import java.awt.image.VolatileImage;
 import java.io.File;
 import java.io.FileFilter.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.*;
+import java.io.IOException;
 import java.security.cert.Extension;
 import java.util.ArrayList;
 
@@ -22,24 +31,25 @@ public class MenuFrame extends Component {
         frame.setTitle("TextEditor");
         frame.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
-
-        JPanel pl = new JPanel();
+       /* JPanel pl = new JPanel();
         pl.setBackground(Color.WHITE);
         frame.add(pl, BorderLayout.CENTER);
+*/
+        textArea = new JTextArea();
+        frame.add(textArea, BorderLayout.CENTER);
+
+        JPanel panelRight = new JPanel();
+        frame.add(panelRight, BorderLayout.EAST);
+
+        JPanel panelLeft = new JPanel();
+        frame.add(panelLeft, BorderLayout.WEST);
 
 
-       /* JPanel panel = new JPanel();
-        frame.add(panel, BorderLayout.EAST);
-
-        JPanel panel2 = new JPanel();
-        frame.add(panel2, BorderLayout.WEST);
-    */
         Action copyActhion = new AbstractAction("Copy", new ImageIcon("copy.jpeg")) {
             public void actionPerformed(ActionEvent e) {
-
+                copy();
             }
         };
-
         copyActhion.putValue(Action.SHORT_DESCRIPTION, "Copy your text");
 
         Action cutActhion = new AbstractAction("Cut", new ImageIcon("cut.jpeg")) {
@@ -52,6 +62,7 @@ public class MenuFrame extends Component {
 
         Action pasteActhion = new AbstractAction("Paste", new ImageIcon("paste.jpeg")) {
             public void actionPerformed(ActionEvent e) {
+                paste();
             }
         };
 
@@ -61,8 +72,9 @@ public class MenuFrame extends Component {
 
         JMenu fileMenu = new JMenu("File");
         fileMenu.setMnemonic('F');
-        JMenuItem newItem = fileMenu.add(new TestAction("New"));
+        JMenuItem newItem = fileMenu.add(new ActionNewListener("New"));
         newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
+
 
         JMenuItem openItem = new JMenuItem("Open");
         fileMenu.add(openItem);
@@ -76,9 +88,6 @@ public class MenuFrame extends Component {
 
         saveAsAction = new TestAction("Save As");
         JMenuItem saveAsItem = fileMenu.add(saveAsAction);
-
-
-
         fileMenu.addSeparator();
 
         fileMenu.add(new AbstractAction("Exit") {
@@ -107,9 +116,8 @@ public class MenuFrame extends Component {
         popup.add(copyActhion);
         popup.add(pasteActhion);
 
-        pl.setComponentPopupMenu(popup);
-        pl.addMouseListener(new MouseAdapter() {
-        });
+        textArea.setComponentPopupMenu(popup);
+        textArea.addMouseListener(new MouseAdapter() {});
 
 
 
@@ -120,12 +128,12 @@ public class MenuFrame extends Component {
 
 
         JComboBox comboStill = new JComboBox();
-
         String [] stillOfWord = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         for(int i = 0; i < stillOfWord.length; i++)
         {
             comboStill.addItem( stillOfWord[i]);
         }
+
         comboStill.setEditable(true);
 
         Action fattyActhion = new AbstractAction("fatty", new ImageIcon("fatty.jpeg")) {
@@ -168,23 +176,10 @@ public class MenuFrame extends Component {
 
     }
 
-
-
-    private  Action saveAction;
-    private  Action saveAsAction;
-    private  JPopupMenu popup;
-    private JFileChooser chooser;
-
-
-    public static final int DEFAULT_HEIGHT = 600;
-    public static final int DEFAULT_WIDTH = 800;
-
-
-
     private class FileOpenListener implements ActionListener {
         public void actionPerformed(ActionEvent event)
         {
-            chooser.setCurrentDirectory(new File("."));
+            chooser.setCurrentDirectory(new File(".."));
 
             int result = chooser.showOpenDialog(MenuFrame.this);
 
@@ -195,6 +190,49 @@ public class MenuFrame extends Component {
             }
         }
     }
+
+    private void copy()
+    {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        String text = textArea.getSelectedText();
+        if(text == null) text = textArea.getText();
+        StringSelection selection = new StringSelection(text);
+        clipboard.setContents(selection, null);
+
+    }
+
+
+    private void paste()
+    {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        DataFlavor flavor = DataFlavor.stringFlavor;
+        if(clipboard.isDataFlavorAvailable(flavor)) {
+            try {
+                String text = (String) clipboard.getData(flavor);
+                textArea.replaceSelection(text);
+            } catch (UnsupportedFlavorException e)
+            {
+                JOptionPane.showMessageDialog(this, e);
+            }
+            catch (IOException e)
+            {
+              JOptionPane.showMessageDialog(this, e);
+            }
+        }
+
+    }
+
+
+    private  Action saveAction;
+    private  Action saveAsAction;
+    private  JPopupMenu popup;
+    private JFileChooser chooser;
+    private JTextArea textArea;
+
+
+    public static final int DEFAULT_HEIGHT = 600;
+    public static final int DEFAULT_WIDTH = 800;
+
 }
 
 class ExtensionFileFilter extends FileFilter {
@@ -242,6 +280,16 @@ class TestAction extends AbstractAction {
         System.out.println(getValue(Action.NAME) + " selected.");
 
     }
+}
+
+class ActionNewListener extends AbstractAction {
+
+    public ActionNewListener(String name) {
+        super(name);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
 
+    }
 }
