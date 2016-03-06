@@ -64,6 +64,8 @@ public class MenuFrame extends Component {
             }
         };
 
+
+
         JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
 
@@ -152,7 +154,6 @@ public class MenuFrame extends Component {
         bar.add(fattyActhion);
         bar.add(italicsActhion);
         bar.add(underlinedActhion);
-
     }
 
 

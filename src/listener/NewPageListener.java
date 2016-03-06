@@ -20,21 +20,21 @@ public class NewPageListener implements ActionListener {
     private int numberOfPage = 0;
 
     public NewPageListener(JFrame frame) {
-        tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
+        tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
         frame.getContentPane().add(tabbedPane);
-
     }
 
     public void actionPerformed(ActionEvent event) {
         numberOfPage++;
         JPopupMenu popup = createPopup();
         newPanel = new JPanel();
-        tabbedPane.add("Panel "+ numberOfPage, newPanel);
         newPanel.setBackground(Color.WHITE);
+        tabbedPane.add("Panel " + numberOfPage, newPanel);
 
         newPanel.setComponentPopupMenu(popup);
-        newPanel.addMouseListener(new MouseAdapter() {
-        });
+        newPanel.addMouseListener(new MouseAdapter() {});
+
+        //tabbedPane.removeTabAt(index);
     }
 
     private JPopupMenu createPopup() {
@@ -42,11 +42,14 @@ public class NewPageListener implements ActionListener {
         popup.add(cutActhion);
         popup.add(copyActhion);
         popup.add(pasteActhion);
+        popup.addSeparator();
+        popup.add(closePage);
         return popup;
     }
 
 
     public void setCopyAction(Action copyActhion) {
+
         this.copyActhion = copyActhion;
     }
 
@@ -55,6 +58,15 @@ public class NewPageListener implements ActionListener {
     }
 
     public void setPasteAction(Action pasteActhion) {
+
         this.pasteActhion = pasteActhion;
     }
+    Action closePage = new AbstractAction("close this page") {
+        public void actionPerformed(ActionEvent e) {
+            int select = tabbedPane.getSelectedIndex();
+            if (select >= 0) {
+                tabbedPane.removeTabAt(select);
+            }
+        }
+    };
 }
