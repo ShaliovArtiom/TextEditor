@@ -17,16 +17,19 @@ public class NewPageListener implements ActionListener {
     private Action copyActhion;
     private Action cutActhion;
     private Action pasteActhion;
+    private int numberOfPage = 0;
 
     public NewPageListener(JFrame frame) {
         tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
         frame.getContentPane().add(tabbedPane);
+
     }
 
     public void actionPerformed(ActionEvent event) {
+        numberOfPage++;
         JPopupMenu popup = createPopup();
         newPanel = new JPanel();
-        tabbedPane.add("Panel ", newPanel);
+        tabbedPane.add("Panel "+ numberOfPage, newPanel);
         newPanel.setBackground(Color.WHITE);
 
         newPanel.setComponentPopupMenu(popup);

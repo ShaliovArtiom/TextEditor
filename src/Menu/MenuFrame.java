@@ -81,6 +81,7 @@ public class MenuFrame extends Component {
         newItem.addActionListener(pageListener);
 
         FileOpenListener fileOpenListener = new FileOpenListener();
+
         JMenuItem openItem = new JMenuItem("Open");
         fileMenu.add(openItem);
         openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
@@ -88,12 +89,14 @@ public class MenuFrame extends Component {
         fileMenu.addSeparator();
 
         SaveListener saveListener = new SaveListener();
+
         JMenuItem saveItem  = new JMenuItem("Save");
         fileMenu.add(saveItem);
         saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
         saveItem.addActionListener(saveListener);
 
         SaveAsListener saveAsListener = new SaveAsListener();
+
         JMenuItem saveAsItem = new JMenuItem("Save As");
         fileMenu.add(saveAsItem);
         fileMenu.addActionListener(saveAsListener);
