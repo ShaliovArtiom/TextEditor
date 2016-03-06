@@ -1,12 +1,14 @@
 package menu;
 
-import action.*;
-import extension.ExtensionFileFilter;
+import action.FileOpenListener;
+import action.NewPageListener;
+import action.TestAction;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 /**
  * Created by Shaliov.Artiom on 20.02.2016.
@@ -19,7 +21,6 @@ public class MenuFrame extends Component {
 
     private Action saveAction;
     private Action saveAsAction;
-    private JFileChooser chooser;
 
     public MenuFrame(JFrame frame) {
 
@@ -48,26 +49,27 @@ public class MenuFrame extends Component {
             }
         };
 
-        NewPageListener pageListener = new NewPageListener(frame);
-        pageListener.setCopyAction(copyAction);
-        pageListener.setCutAction(cutActhion);
-        pageListener.setPasteAction(pasteAction);
-
         JMenuBar menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
 
         JMenu fileMenu = new JMenu("File");
         fileMenu.setMnemonic('F');
+
+        NewPageListener pageListener = new NewPageListener(frame);
+        pageListener.setCopyAction(copyAction);
+        pageListener.setCutAction(cutActhion);
+        pageListener.setPasteAction(pasteAction);
+
         JMenuItem newItem = new JMenuItem("New");
         fileMenu.add(newItem);
         newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
-
         newItem.addActionListener(pageListener);
 
+        FileOpenListener fileOpenListener = new FileOpenListener();
         JMenuItem openItem = new JMenuItem("Open");
         fileMenu.add(openItem);
         openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
-        openItem.addActionListener(new FileOpenListener());
+        openItem.addActionListener(fileOpenListener);
         fileMenu.addSeparator();
 
         saveAction = new TestAction("Save");
@@ -145,22 +147,6 @@ public class MenuFrame extends Component {
         bar.add(italicsActhion);
         bar.add(underlinedActhion);
 
-        chooser = new JFileChooser();
-        final ExtensionFileFilter filter = new ExtensionFileFilter();
-        filter.addExtension("txt");
-        filter.setDescription("Text files");
-        chooser.setFileFilter(filter);
-
-    }
-
-    private class FileOpenListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            chooser.setCurrentDirectory(new File(".."));
-
-            int result = chooser.showOpenDialog(MenuFrame.this);
-
-            if (result == JFileChooser.APPROVE_OPTION) {String name = chooser.getSelectedFile().getPath();}
-        }
     }
 
 
