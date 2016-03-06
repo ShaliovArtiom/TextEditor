@@ -1,8 +1,9 @@
 package menu;
 
-import action.FileOpenListener;
-import action.NewPageListener;
-import action.TestAction;
+import listener.FileOpenListener;
+import listener.NewPageListener;
+import listener.SaveAsListener;
+import listener.SaveListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,13 +20,27 @@ public class MenuFrame extends Component {
     public static final int DEFAULT_HEIGHT = 600;
     public static final int DEFAULT_WIDTH = 800;
 
-    private Action saveAction;
-    private Action saveAsAction;
 
     public MenuFrame(JFrame frame) {
 
         frame.setTitle("TextEditor");
         frame.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+
+        Action fattyActhion = new AbstractAction("fatty", new ImageIcon("fatty.jpeg")) {
+            public void actionPerformed(ActionEvent e) {
+            }
+        };
+
+        Action italicsActhion = new AbstractAction("italics", new ImageIcon("italics.jpeg")) {
+            public void actionPerformed(ActionEvent e) {
+            }
+        };
+
+
+        Action underlinedActhion = new AbstractAction("underlined", new ImageIcon("underlined.jpeg")) {
+            public void actionPerformed(ActionEvent e) {
+            }
+        };
 
 
         Action copyAction = new AbstractAction("Copy", new ImageIcon("copy.jpeg")) {
@@ -72,12 +87,16 @@ public class MenuFrame extends Component {
         openItem.addActionListener(fileOpenListener);
         fileMenu.addSeparator();
 
-        saveAction = new TestAction("Save");
-        JMenuItem saveItem = fileMenu.add(saveAction);
+        SaveListener saveListener = new SaveListener();
+        JMenuItem saveItem  = new JMenuItem("Save");
+        fileMenu.add(saveItem);
         saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
+        saveItem.addActionListener(saveListener);
 
-        saveAsAction = new TestAction("Save As");
-        JMenuItem saveAsItem = fileMenu.add(saveAsAction);
+        SaveAsListener saveAsListener = new SaveAsListener();
+        JMenuItem saveAsItem = new JMenuItem("Save As");
+        fileMenu.add(saveAsItem);
+        fileMenu.addActionListener(saveAsListener);
         fileMenu.addSeparator();
 
         fileMenu.add(new AbstractAction("Exit") {
@@ -114,22 +133,6 @@ public class MenuFrame extends Component {
         }
 
         comboStill.setEditable(true);
-
-        Action fattyActhion = new AbstractAction("fatty", new ImageIcon("fatty.jpeg")) {
-            public void actionPerformed(ActionEvent e) {
-            }
-        };
-
-        Action italicsActhion = new AbstractAction("italics", new ImageIcon("italics.jpeg")) {
-            public void actionPerformed(ActionEvent e) {
-            }
-        };
-
-
-        Action underlinedActhion = new AbstractAction("underlined", new ImageIcon("underlined.jpeg")) {
-            public void actionPerformed(ActionEvent e) {
-            }
-        };
 
         JToolBar bar = new JToolBar();
         frame.add(bar, BorderLayout.NORTH);
