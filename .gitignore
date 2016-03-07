@@ -1,3 +1,9 @@
+target/
+out/
+.idea/
+*.iml
+*.ipr
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
