@@ -25,7 +25,7 @@ public class NewPageListener implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent event) {
-        numberOfPage++;
+        numberOfPage++;;
         JPopupMenu popup = createPopup();
         newPanel = new JPanel();
         newPanel.setBackground(Color.WHITE);

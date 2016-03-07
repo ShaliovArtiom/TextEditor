@@ -2,8 +2,10 @@ package by.bsuir.iit.ppvis.lab1.menu;
 
 import by.bsuir.iit.ppvis.lab1.fileMenu.MyFileMenu;
 import by.bsuir.iit.ppvis.lab1.listener.FileOpenListener;
+import by.bsuir.iit.ppvis.lab1.listener.MyKeyListener;
 import by.bsuir.iit.ppvis.lab1.listener.NewPageListener;
 import by.bsuir.iit.ppvis.lab1.myToolBar.ToolBar;
+import element.Element;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -79,6 +81,10 @@ public class MenuFrame {
         toolBar.setItalicsAction(italicsAction);
         toolBar.setUnderlinedAction(underlinedAction);
         toolBar.createToolBar(frame);
+
+        Element element = new Element();
+        MyKeyListener mk = new MyKeyListener(frame);
+        mk.init();
     }
 
 
