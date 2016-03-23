@@ -1,6 +1,10 @@
 package by.bsuir.iit.ppvis.lab1;
 
+<<<<<<< HEAD:src/by/bsuir/iit/ppvis/lab1/Main.java
 import by.bsuir.iit.ppvis.lab1.view.MenuFrame;
+=======
+import by.bsuir.iit.ppvis.lab1.menu.MenuFrame;
+>>>>>>> origin/master:src/by/bsuir/iit/ppvis/lab1/Main.java
 
 import javax.swing.*;
 
