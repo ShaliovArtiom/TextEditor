@@ -29,10 +29,10 @@ public class MenuFrame {
             }
         };
 
-        Action underlinedAction = new AbstractAction("underlined", new ImageIcon("underlined.jpeg")) {
-            public void actionPerformed(ActionEvent e) {
-            }
-        };
+       // Action underlinedAction = new AbstractAction("underlined", new ImageIcon("underlined.jpeg")) {
+       //     public void actionPerformed(ActionEvent e) {
+       //     }
+       // };
 
         Action copyAction = new AbstractAction("Copy", new ImageIcon("copy.jpeg")) {
             public void actionPerformed(ActionEvent e) {
@@ -70,15 +70,11 @@ public class MenuFrame {
         toolBar.setPasteAction(pasteAction);
         toolBar.setFattyAction(fattyAction);
         toolBar.setItalicsAction(italicsAction);
-        toolBar.setUnderlinedAction(underlinedAction);
+        //toolBar.setUnderlinedAction(underlinedAction);
         toolBar.createToolBar(frame);
 
         Document doc = new Document();
         frame.add(doc, BorderLayout.CENTER);
-
-//        Glyph element = new Glyph();
-//        PressKeyListener mk = new PressKeyListener(frame);
-//        mk.init();
     }
 
 

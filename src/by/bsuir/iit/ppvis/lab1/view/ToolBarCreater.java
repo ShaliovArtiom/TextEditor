@@ -12,7 +12,7 @@ public class ToolBarCreater {
     private Action copyAction;
     private Action fattyAction;
     private Action italicsAction;
-    private Action underlinedAction;
+  // private Action underlinedAction;
 
     public ToolBarCreater(JFrame frame) {
         createToolBar(frame);
@@ -47,7 +47,7 @@ public class ToolBarCreater {
         bar.addSeparator();
         bar.add(fattyAction);
         bar.add(italicsAction);
-        bar.add(underlinedAction);
+      //  bar.add(underlinedAction);
     }
 
     public void setCopyAction(Action copyAction) { this.copyAction = copyAction; }
@@ -60,8 +60,6 @@ public class ToolBarCreater {
 
     public void setItalicsAction(Action italicsAction) { this.italicsAction = italicsAction; }
 
-    public void setUnderlinedAction(Action underlinedAction) { this.underlinedAction = underlinedAction; }
-
-
+  // public void setUnderlinedAction(Action underlinedAction) { this.underlinedAction = underlinedAction; }
 
 }

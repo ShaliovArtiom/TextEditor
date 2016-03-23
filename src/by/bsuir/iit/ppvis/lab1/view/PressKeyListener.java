@@ -6,15 +6,21 @@ import java.awt.event.KeyListener;
 /**
  * Created by Laptop on 07.03.16.
  */
-public class PressKeyListener implements KeyListener{
-    private char simbol;
+public class PressKeyListener implements KeyListener {
+    private Document document;
+    private Glyph.LettersContainer lettersContainer;
 
-    public PressKeyListener() {}
-
+    public PressKeyListener(Document document, Glyph.LettersContainer lettersContainer) {
+        this.document = document;
+        this.lettersContainer = lettersContainer;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
-
+        Glyph glyph = new Glyph();
+        glyph.setSymbol(e.getKeyChar());
+        lettersContainer.addLetter(glyph);
+        document.repaint();
     }
 
     @Override
