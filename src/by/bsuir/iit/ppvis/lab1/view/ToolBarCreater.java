@@ -30,7 +30,6 @@ public class ToolBarCreater {
         for (int i = 0; i < stillOfWord.length; i++) {
             comboStill.addItem(stillOfWord[i]);
         }
-
         comboStill.setEditable(true);
 
         JToolBar bar = new JToolBar();
