@@ -25,7 +25,7 @@ public class Document extends JPanel {
         for (Glyph G : letterContainer.list) {
             g2.drawString(G.toString(), x, y);
             x += g2.getFontMetrics().stringWidth(G.toString());
-            if (x > this.getWidth() - 5) {
+            if (x > this.getWidth() - 10) {
                 y += g2.getFont().getSize();
                 x = 1;
             }
