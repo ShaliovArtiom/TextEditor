@@ -20,8 +20,7 @@ public class Glyph {
         font = "TimesNewRoman";
     }
 
-    public String toString() {
-        return "" + symbol;
+    public String toString() {return "" + symbol;
     }
 
     public static class LettersContainer {
