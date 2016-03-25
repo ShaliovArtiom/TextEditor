@@ -2,16 +2,24 @@ package by.bsuir.iit.ppvis.lab1.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class Document extends JPanel {
 
-    private Glyph.LettersContainer letterContainer;
+    private LetterContainer.LettersContainer letterContainer;
 
     public Document() {
         this.setBackground(Color.WHITE);
-        letterContainer = new Glyph.LettersContainer();
+        letterContainer = new LetterContainer.LettersContainer();
         this.addMouseListener(new MouseFocus(this));
         this.addKeyListener(new PressKeyListener(this, letterContainer));
+    }
+
+    public void inputText(KeyEvent e) {
+        Glyph glyph = new Glyph();
+        glyph.setSymbol(e.getKeyChar());
+        letterContainer.addLetter(glyph);
+        repaint();
     }
 
     @Override

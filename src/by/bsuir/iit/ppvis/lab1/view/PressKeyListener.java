@@ -8,20 +8,18 @@ import java.awt.event.KeyListener;
  */
 public class PressKeyListener implements KeyListener {
     private Document document;
-    private Glyph.LettersContainer lettersContainer;
+    private LetterContainer.LettersContainer lettersContainer;
 
-    public PressKeyListener(Document document, Glyph.LettersContainer lettersContainer) {
+    public PressKeyListener(Document document, LetterContainer.LettersContainer lettersContainer) {
         this.document = document;
         this.lettersContainer = lettersContainer;
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        Glyph glyph = new Glyph();
-        glyph.setSymbol(e.getKeyChar());
-        lettersContainer.addLetter(glyph);
-        document.repaint();
+        document.inputText(e);
     }
+
 
     @Override
     public void keyPressed(KeyEvent e) {

@@ -1,8 +1,5 @@
 package by.bsuir.iit.ppvis.lab1.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Laptop on 07.03.16.
  */
@@ -20,16 +17,7 @@ public class Glyph {
         font = "TimesNewRoman";
     }
 
-    public String toString() {return "" + symbol;
-    }
-
-    public static class LettersContainer {
-        public List<Glyph> list = new ArrayList<>();
-
-        public void addLetter(Glyph glyph) {
-            list.add(glyph);
-        }
-    }
+    public String toString() {return "" + symbol;}
 
     public void setSymbol(char symbol) {
         this.symbol = symbol;
