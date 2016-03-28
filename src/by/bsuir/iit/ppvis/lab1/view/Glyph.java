@@ -10,16 +10,17 @@ public class Glyph {
     private boolean fatty;
     private boolean italics;
 
-    public Glyph() {
-        fatty = false;
-        italics = false;
-        size = 12;
-        font = "TimesNewRoman";
-    }
+    public Glyph() {}
 
-    public String toString() {return "" + symbol;}
+    public String toString() {
+        return "" + symbol;
+    }
 
     public void setSymbol(char symbol) {
         this.symbol = symbol;
     }
+
+    public void setFatty(boolean fatty) { this.fatty = fatty; }
+
+    public boolean isFatty() { return fatty; }
 }

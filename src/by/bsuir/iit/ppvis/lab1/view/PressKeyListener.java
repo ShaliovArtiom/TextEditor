@@ -8,16 +8,26 @@ import java.awt.event.KeyListener;
  */
 public class PressKeyListener implements KeyListener {
     private Document document;
-    private LetterContainer.LettersContainer lettersContainer;
+    private LetterContainer.LettersContainer letterContainer;
 
-    public PressKeyListener(Document document, LetterContainer.LettersContainer lettersContainer) {
+    public PressKeyListener(Document document, LetterContainer.LettersContainer letterContainer) {
         this.document = document;
-        this.lettersContainer = lettersContainer;
+        this.letterContainer = letterContainer;
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        document.inputText(e);
+        char keyChar = e.getKeyChar();
+        if(keyChar == KeyEvent.VK_ENTER)
+        {
+            keyChar  = ' ';
+            document.newLine(keyChar);
+        }
+        else if(keyChar == KeyEvent.VK_BACK_SPACE)
+        {
+            document.backSpace();
+        }
+        else document.inputText(keyChar);
     }
 
 

@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 
 public class MenuFrame {
 
+    private Document doc;
+
     public static final int DEFAULT_HEIGHT = 600;
     public static final int DEFAULT_WIDTH = 800;
 
@@ -21,6 +23,8 @@ public class MenuFrame {
 
         Action fattyAction = new AbstractAction("fatty", new ImageIcon("fatty.jpeg")) {
             public void actionPerformed(ActionEvent e) {
+                doc = new Document();
+                doc.fatty();
             }
         };
 

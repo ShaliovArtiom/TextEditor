@@ -14,5 +14,12 @@ class LetterContainer {
         public void addLetter(Glyph glyph) {
             list.add(glyph);
         }
+
+        public void deleteLastElement() {
+            if (!list.isEmpty()) {
+                list.remove(list.size() - 1);
+            }
+
+        }
     }
 }

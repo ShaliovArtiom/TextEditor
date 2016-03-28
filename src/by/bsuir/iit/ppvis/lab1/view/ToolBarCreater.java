@@ -24,7 +24,6 @@ public class ToolBarCreater {
         JComboBox comboSize = new JComboBox(sizeOfWord);
         comboSize.setEditable(true);
 
-
         JComboBox comboStill = new JComboBox();
         String[] stillOfWord = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
         for (int i = 0; i < stillOfWord.length; i++) {
