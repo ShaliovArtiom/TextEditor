@@ -21,17 +21,17 @@ public class MenuFrame {
         frame.setTitle("TextEditor");
         frame.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
-        Action fattyAction = new AbstractAction("fatty", new ImageIcon("fatty.jpeg")) {
-            public void actionPerformed(ActionEvent e) {
-                doc = new Document();
-                doc.fatty();
-            }
-        };
-
-        Action italicsAction = new AbstractAction("italics", new ImageIcon("italics.jpeg")) {
-            public void actionPerformed(ActionEvent e) {
-            }
-        };
+//        Action fattyAction = new AbstractAction("fatty", new ImageIcon("fatty.jpeg")) {
+//            public void actionPerformed(ActionEvent e) {
+////                doc = new Document();
+////                doc.fatty();
+//            }
+//        };
+//
+//        Action italicsAction = new AbstractAction("italics", new ImageIcon("italics.jpeg")) {
+//            public void actionPerformed(ActionEvent e) {
+//            }
+//        };
 
        // Action underlinedAction = new AbstractAction("underlined", new ImageIcon("underlined.jpeg")) {
        //     public void actionPerformed(ActionEvent e) {
@@ -68,12 +68,12 @@ public class MenuFrame {
         menuBar.createFileMenu(fileOpenListener);
         menuBar.createEditMenu();
 
-        ToolBarCreater toolBar = new ToolBarCreater(frame);
+        ToolBarCreater toolBar = new ToolBarCreater();
         toolBar.setCutAction(cutAction);
         toolBar.setCopyAction(copyAction);
         toolBar.setPasteAction(pasteAction);
-        toolBar.setFattyAction(fattyAction);
-        toolBar.setItalicsAction(italicsAction);
+//        toolBar.setFattyAction(fattyAction);
+//        toolBar.setItalicsAction(italicsAction);
         //toolBar.setUnderlinedAction(underlinedAction);
         toolBar.createToolBar(frame);
 

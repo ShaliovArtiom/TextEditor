@@ -1,14 +1,13 @@
 package by.bsuir.iit.ppvis.lab1.view;
 
+import java.awt.*;
+
 /**
  * Created by Laptop on 07.03.16.
  */
 public class Glyph {
     private char symbol;
-    private int size;
-    private String font;
-    private boolean fatty;
-    private boolean italics;
+    private Font textAtributes;
 
     public Glyph() {}
 
@@ -20,7 +19,11 @@ public class Glyph {
         this.symbol = symbol;
     }
 
-    public void setFatty(boolean fatty) { this.fatty = fatty; }
+    public void setTextAtributes(Font textAtributes) {
+        this.textAtributes = textAtributes;
+    }
 
-    public boolean isFatty() { return fatty; }
+    public Font getTextAtributes() {
+        return textAtributes;
+    }
 }

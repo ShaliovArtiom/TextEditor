@@ -6,15 +6,15 @@ import java.awt.event.MouseListener;
 
 
 public class MouseFocus implements MouseListener {
-    private JPanel text;
+    private JPanel document;
 
-    public MouseFocus(JPanel text) {
-        this.text = text;
+    public MouseFocus(JPanel document) {
+        this.document = document;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-     text.requestFocusInWindow();
+        document.requestFocusInWindow();
     }
 
     @Override
