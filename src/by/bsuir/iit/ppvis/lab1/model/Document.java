@@ -12,6 +12,13 @@ public class Document {
     private Font defaultFont;
 
     public void addLetter(Glyph glyph) {
+        if (defaultFont == null) {
+            defaultFont = new Font("TimesNewRoman", 0, 10);
+            glyph.setFont(defaultFont);
+        } else {
+            Font font = new Font(defaultFont.getName(), defaultFont.getStyle(), defaultFont.getSize());
+            glyph.setFont(font);
+        }
         glyphList.add(glyph);
     }
 

@@ -13,14 +13,16 @@ public class ToolBarCreater {
     private Action cutAction;
     private Action pasteAction;
     private Action copyAction;
-//    private Action fattyAction;
-//    private Action italicsAction;
     private JComboBox size;
     private JComboBox face;
     private JCheckBox bold;
     private JCheckBox italic;
     private Font font;
-    // private Action underlinedAction;
+    private DocumentView documentView;
+
+    public ToolBarCreater(DocumentView documentView) {
+        this.documentView = documentView;
+    }
 
     public void createToolBar(JFrame frame) {
 
@@ -28,14 +30,14 @@ public class ToolBarCreater {
 
         size = new JComboBox(new String[]
                 {
-                        "8", "10", "12", "15", "18", "24", "36", "48"
+                        "10", "12", "15", "18", "24", "36", "48"
 
                 });
         size.addActionListener(listener);
 
         face = new JComboBox(new String[]
                 {
-                        "Serif", "SansSerif", "Monospaced", "Dialod", "DialogInput", "TimesNewRoman"
+                        "TimesNewRoman", "Serif", "SansSerif", "Monospaced", "Dialod", "DialogInput"
 
                 });
         face.addActionListener(listener);
@@ -60,7 +62,7 @@ public class ToolBarCreater {
         bar.addSeparator();
         bar.add(bold);
         bar.add(italic);
-      //  bar.add(underlinedAction);
+        //  bar.add(underlinedAction);
     }
 
     public class FontAction implements ActionListener {
@@ -72,25 +74,21 @@ public class ToolBarCreater {
 
             int fontSize = Integer.parseInt(
                     (String) size.getSelectedItem());
+
             font = new Font(fontFace, fontStyle, fontSize);
+            documentView.getDocument().setDefaultFont(font);
         }
-
     }
 
-    public Font getFont() {
-        return font;
+    public void setCopyAction(Action copyAction) {
+        this.copyAction = copyAction;
     }
 
-    public void setCopyAction(Action copyAction) { this.copyAction = copyAction; }
+    public void setCutAction(Action cutAction) {
+        this.cutAction = cutAction;
+    }
 
-    public void setCutAction(Action cutAction) { this.cutAction = cutAction; }
-
-    public void setPasteAction(Action pasteAction) { this.pasteAction = pasteAction; }
-
-//    public void setFattyAction(Action fattyAction) { this.fattyAction = fattyAction; }
-//
-//    public void setItalicsAction(Action italicsAction) { this.italicsAction = italicsAction; }
-
-    // public void setUnderlinedAction(Action underlinedAction) { this.underlinedAction = underlinedAction; }
-
+    public void setPasteAction(Action pasteAction) {
+        this.pasteAction = pasteAction;
+    }
 }

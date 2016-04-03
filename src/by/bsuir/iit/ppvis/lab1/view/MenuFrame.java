@@ -12,8 +12,6 @@ import java.awt.event.ActionEvent;
 
 public class MenuFrame {
 
-    private Document doc;
-
     public static final int DEFAULT_HEIGHT = 600;
     public static final int DEFAULT_WIDTH = 800;
 
@@ -68,17 +66,15 @@ public class MenuFrame {
         menuBar.createFileMenu(fileOpenListener);
         menuBar.createEditMenu();
 
-        ToolBarCreater toolBar = new ToolBarCreater();
+        DocumentView documentView = new DocumentView();
+        frame.add(documentView, BorderLayout.CENTER);
+
+
+        ToolBarCreater toolBar = new ToolBarCreater(documentView);
         toolBar.setCutAction(cutAction);
         toolBar.setCopyAction(copyAction);
         toolBar.setPasteAction(pasteAction);
-//        toolBar.setFattyAction(fattyAction);
-//        toolBar.setItalicsAction(italicsAction);
-        //toolBar.setUnderlinedAction(underlinedAction);
         toolBar.createToolBar(frame);
-
-        Document doc = new Document();
-        frame.add(doc, BorderLayout.CENTER);
     }
 
 
