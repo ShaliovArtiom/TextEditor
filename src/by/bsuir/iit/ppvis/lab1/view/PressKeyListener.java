@@ -22,8 +22,7 @@ public class PressKeyListener implements KeyListener {
         glyph = new Glyph();
 
         if (keyChar == KeyEvent.VK_ENTER) {
-            keyChar = ' ';
-            documentView.newLine(keyChar, glyph);
+            documentView.newLine();
         } else if (keyChar == KeyEvent.VK_BACK_SPACE) {
             documentView.backSpace();
         } else documentView.inputText(keyChar, glyph);

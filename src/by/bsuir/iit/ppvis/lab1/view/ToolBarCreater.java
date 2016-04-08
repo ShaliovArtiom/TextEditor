@@ -30,14 +30,15 @@ public class ToolBarCreater {
 
         size = new JComboBox(new String[]
                 {
-                        "10", "12", "15", "18", "24", "36", "48"
+                        "10", "12", "15", "18", "24", "36"
 
                 });
+
         size.addActionListener(listener);
 
         face = new JComboBox(new String[]
                 {
-                        "TimesNewRoman", "Serif", "SansSerif", "Monospaced", "Dialod", "DialogInput"
+                        "TimesNewRoman", "Serif", "SansSerif", "Dialod", "DialogInput"
 
                 });
         face.addActionListener(listener);
@@ -68,12 +69,12 @@ public class ToolBarCreater {
     public class FontAction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
+            documentView.repaint();
             String fontFace = (String) face.getSelectedItem();
             int fontStyle = (bold.isSelected() ? Font.BOLD : 0) +
                     (italic.isSelected() ? Font.ITALIC : 0);
 
-            int fontSize = Integer.parseInt(
-                    (String) size.getSelectedItem());
+            int fontSize = Integer.parseInt((String) size.getSelectedItem());
 
             font = new Font(fontFace, fontStyle, fontSize);
             documentView.getDocument().setDefaultFont(font);

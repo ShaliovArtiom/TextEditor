@@ -1,20 +1,26 @@
 package by.bsuir.iit.ppvis.lab1.view;
 
-import javax.swing.*;
+import by.bsuir.iit.ppvis.lab1.model.Carriage;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 
 public class MouseFocus implements MouseListener {
-    private JPanel document;
+    private DocumentView documentView;
+    private Carriage carriage;
 
-    public MouseFocus(JPanel document) {
-        this.document = document;
+    public MouseFocus(DocumentView documentView) {
+        this.documentView = documentView;
+        carriage = new Carriage();
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        document.requestFocusInWindow();
+    public void mouseClicked(MouseEvent e)
+    {
+        documentView.requestFocusInWindow();
+        carriage.setX(e.getX());
+        carriage.setY(e.getY());
     }
 
     @Override
