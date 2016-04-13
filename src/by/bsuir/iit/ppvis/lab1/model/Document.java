@@ -9,13 +9,9 @@ import java.util.List;
  */
 public class Document {
     private List<Glyph> glyphList;
-    //    private Line listLine;
     private Font defaultFont;
 
     public Document() {
-//        listLine = new Line();
-//        listLine.setList(new ArrayList<>());
-//        listLine.setLineNumber(0);
         glyphList = new ArrayList<>();
         defaultFont = new Font("TimesNewRoman", 0, 10);
     }
@@ -36,11 +32,6 @@ public class Document {
             glyphList.remove(glyphList.size() - 1);
         }
     }
-
-//    public void newLine() {
-//        listLine.setList(glyphList);
-//        listLine.setLineNumber(+1);
-//    }
 
 
     public List<Glyph> getGlyphList() {

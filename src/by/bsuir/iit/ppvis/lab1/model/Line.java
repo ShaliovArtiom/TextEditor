@@ -1,28 +1,29 @@
 package by.bsuir.iit.ppvis.lab1.model;
 
-import java.util.List;
-
 /**
  * Created by TyZiK on 08.04.2016.
  */
 public class Line {
-    private int lineNumber;
-    private List<Glyph> list;
+    private int maxSizeOfElement;
+    private int y;
 
-    public List<Glyph> getList() {
-        return list;
+    public Line(Document document) {
+        maxSizeOfElement = 0;
     }
 
-    public void setList(List<Glyph> list) {
-        this.list = list;
+    public int getMaxSizeOfElement() {
+        return maxSizeOfElement;
     }
 
-
-    public int getLineNumber() {
-        return list.indexOf(lineNumber);
+    public void setMaxSizeOfElement(int maxSizeOfElement) {
+        this.maxSizeOfElement = maxSizeOfElement;
     }
 
-    public void setLineNumber(int lineNumber) {
-        this.lineNumber = lineNumber;
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }
