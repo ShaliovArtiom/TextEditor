@@ -19,8 +19,6 @@ public class MouseFocus implements MouseListener {
     public void mouseClicked(MouseEvent e)
     {
         documentView.requestFocusInWindow();
-        carriage.setX(e.getX());
-        carriage.setY(e.getY());
     }
 
     @Override

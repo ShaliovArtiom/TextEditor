@@ -1,5 +1,7 @@
 package by.bsuir.iit.ppvis.lab1.view;
 
+import by.bsuir.iit.ppvis.lab1.model.Line;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -77,7 +79,9 @@ public class ToolBarCreater {
             int fontSize = Integer.parseInt((String) size.getSelectedItem());
 
             font = new Font(fontFace, fontStyle, fontSize);
-            documentView.getDocument().setDefaultFont(font);
+            java.util.List<Line> lineList = documentView.getDocument().getLineList();
+            Line line = lineList.get(lineList.size() - 1);
+            line.setFont(font);
         }
     }
 

@@ -4,23 +4,22 @@ package by.bsuir.iit.ppvis.lab1.model;
  * Created by TyZiK on 04.04.2016.
  */
 public class Carriage {
-    private int x;
-    private int y;
+    private Glyph nextGlypgh;
+    private Glyph lastGlypgh;
 
-
-    public int getX() {
-        return x;
+    public Glyph getNextGlypgh() {
+        return nextGlypgh;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setNextGlypgh(Glyph nextGlypgh) {
+        this.nextGlypgh = nextGlypgh;
     }
 
-    public int getY() {
-        return y;
+    public Glyph getLastGlypgh() {
+        return lastGlypgh;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setLastGlypgh(Glyph lastGlypgh) {
+        this.lastGlypgh = lastGlypgh;
     }
 }

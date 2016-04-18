@@ -8,7 +8,6 @@ import java.awt.*;
 public class Glyph {
     private char symbol;
     private Font font;
-    private boolean attrib;
 
     public char getSymbol() {
         return symbol;
@@ -18,7 +17,6 @@ public class Glyph {
         this.symbol = symbol;
 
     }
-
     public Font getFont() {
         return font;
     }
@@ -27,11 +25,4 @@ public class Glyph {
         this.font = font;
     }
 
-    public boolean isAttrib() {
-        return attrib;
-    }
-
-    public void setAttrib(boolean attrib) {
-        this.attrib = attrib;
-    }
 }

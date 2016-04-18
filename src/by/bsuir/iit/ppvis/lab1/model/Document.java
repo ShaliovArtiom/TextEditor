@@ -8,38 +8,27 @@ import java.util.List;
  * Created by TyZiK on 03.04.2016.
  */
 public class Document {
-    private List<Glyph> glyphList;
+
+    private List<Line> lineList;
     private Font defaultFont;
+    private Carriage carriage;
 
     public Document() {
-        glyphList = new ArrayList<>();
         defaultFont = new Font("TimesNewRoman", 0, 10);
+        lineList = new ArrayList<>();
+        lineList.add(new Line(defaultFont));
     }
 
-    public void addGlyph(Glyph glyph) {
-        if (defaultFont.getSize() == 10 & defaultFont.getName() == "TimesNewRoman" & defaultFont.getStyle() == 0) {
-            glyph.setFont(defaultFont);
-        } else {
-            Font font = new Font(defaultFont.getName(), defaultFont.getStyle(), defaultFont.getSize());
-            glyph.setFont(font);
-        }
-        glyphList.add(glyph);
-
+    public void newLine(Line line) {
+        lineList.add(line);
     }
 
-    public void deleteLastElement() {
-        if (!glyphList.isEmpty()) {
-            glyphList.remove(glyphList.size() - 1);
-        }
+    public List<Line> getLineList() {
+        return lineList;
     }
 
-
-    public List<Glyph> getGlyphList() {
-        return glyphList;
-    }
-
-    public void setGlyphList(List<Glyph> glyphList) {
-        this.glyphList = glyphList;
+    public void setLineList(List<Line> lineList) {
+        this.lineList = lineList;
     }
 
     public Font getDefaultFont() {

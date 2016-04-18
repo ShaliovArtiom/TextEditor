@@ -6,16 +6,14 @@ import by.bsuir.iit.ppvis.lab1.model.Line;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 class DocumentView extends JPanel {
 
     private Document document;
-    private Line line;
-    private int x;
-    private int y;
-    int k = 0;
+    private String string;
+    private int distanceBetweenGlyph;
+    private int heightGlyph;
 
     public DocumentView() {
         this.setBackground(Color.WHITE);
@@ -26,80 +24,54 @@ class DocumentView extends JPanel {
 
     public void inputText(char s, Glyph glyph) {
         glyph.setSymbol(s);
-        document.addGlyph(glyph);
+        List<Line> lineList = document.getLineList();
+        Line line = lineList.get(lineList.size() - 1);
+        line.addGlyph(glyph);
         repaint();
     }
 
-    public void newLine(Glyph glyph) {
-        glyph.setAttrib(true);
-        document.addGlyph(glyph);
-        repaint();
+    public void newLine() {
+        Line line = new Line(document.getDefaultFont());
+        document.newLine(line);
+        line.setHeightGlyph(heightGlyph);
     }
 
     public void backSpace() {
-        document.deleteLastElement();
-        this.repaint();
+        List<Line> lineList = document.getLineList();
+        Line line = lineList.get(lineList.size() - 1);
+        line.deleteLastElement();
+        repaint();
     }
 
     @Override
     protected void paintComponent(Graphics gr) {
         gr.clearRect(0, 0, this.getWidth(), this.getHeight());
         Graphics2D g2 = (Graphics2D) gr;
-        line = new Line(document);
-        x = 1;
-        y = document.getDefaultFont().getSize();
-        line.setY(y);
-        for (Glyph glyph : document.getGlyphList()) {
+        distanceBetweenGlyph = 1;
+        for (Line line : document.getLineList()) {
+            heightGlyph = line.getMaxHeightOfElement() + document.getLineList().indexOf(line);
 
-            String string = String.valueOf(glyph.getSymbol());
-            g2.setFont(glyph.getFont());
+            List<Glyph> glyphList = line.getGlyphList();
+            for (Glyph glyph : glyphList) {
+                string = String.valueOf(glyph.getSymbol());
+                g2.setFont(glyph.getFont());
 
-            FontRenderContext context = g2.getFontRenderContext();
-            Rectangle2D bounds = glyph.getFont().getStringBounds(string, context);
-            double maxY = -bounds.getY();
-            if (line.getMaxSizeOfElement() < (int) maxY) {
-                line.setMaxSizeOfElement((int) maxY);
+                g2.drawString(string, glyphList.indexOf(glyph) + distanceBetweenGlyph, heightGlyph);
+                distanceBetweenGlyph += g2.getFontMetrics().stringWidth(string);
+
             }
-                if (line.getMaxSizeOfElement() > line.getY()) {
-                    g2.drawString(string, x, line.getMaxSizeOfElement());
-                }
-                else {
-                    g2.drawString(string, x, line.getY());
-
-                }
-            //g2.drawString(string, x, glyph.getY());
-
-            x += g2.getFontMetrics().stringWidth(string);
-            if (x > this.getWidth()) {
-                this.setPreferredSize(new Dimension(getWidth() + g2.getFontMetrics().stringWidth(string), line.getY()));
-                this.repaint();
-            }
-            if(glyph.isAttrib())
-            {
-                y += document.getDefaultFont().getSize();
-                line.setY(y);
-                x = 1;
-            }
+            distanceBetweenGlyph = 1;
+            if (distanceBetweenGlyph > this.getWidth()) {
+                this.setPreferredSize(new Dimension(getWidth() +
+                        g2.getFontMetrics().stringWidth(string), document.getLineList().indexOf(line)));
+            } //else if (document.getLineList().indexOf(line) > this.getHeight()) {
+//                this.setPreferredSize(new Dimension(getHeight() +
+//                        document.getDefaultFont().getSize(), document.getLineList().indexOf(line)));
+//            }
         }
     }
-
 
     public Document getDocument() {
         return document;
     }
 }
-
-//
-//FontRenderContext context = g2.getFontRenderContext();
-//Rectangle2D bounds = glyph.getFont().getStringBounds(string, context);
-//double maxY = -bounds.getY();
-//
-//if (maxHeight < (int) maxY)
-//        maxHeight = (int) maxY;
-//
-//        if (maxHeight > y) {
-//        g2.drawString(string, x, maxHeight);
-//        } else {
-//        g2.drawString(string, x, y);
-//        y += k;
-//        }
