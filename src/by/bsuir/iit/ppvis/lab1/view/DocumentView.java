@@ -23,6 +23,8 @@ class DocumentView extends JPanel {
     }
 
     public void inputText(char s, Glyph glyph) {
+        if(document.getLineList().isEmpty())
+            document = new Document();
         glyph.setSymbol(s);
         List<Line> lineList = document.getLineList();
         Line line = lineList.get(lineList.size() - 1);
@@ -37,10 +39,14 @@ class DocumentView extends JPanel {
     }
 
     public void backSpace() {
-        List<Line> lineList = document.getLineList();
-        Line line = lineList.get(lineList.size() - 1);
-        line.deleteLastElement();
-        repaint();
+        if(!document.getLineList().isEmpty()) {
+            List<Line> lineList = document.getLineList();
+            Line line = lineList.get(lineList.size() - 1);
+            line.deleteLastElement();
+            if (line.getGlyphList().isEmpty())
+                lineList.remove(line);
+            repaint();
+        }
     }
 
     @Override
