@@ -1,24 +1,22 @@
 package by.bsuir.iit.ppvis.lab1.model;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Created by TyZiK on 08.04.2016.
  */
 public class Line {
-    private String string;
     private int heightGlyph;
     private int maxHeightOfElement;
-    private List<Glyph> glyphList;
+    private LinkedList<Glyph> glyphList;
     private Font font;
 
 
     public Line(Font font) {
         heightGlyph = 0;
         maxHeightOfElement = 0;
-        glyphList = new ArrayList<>();
+        glyphList = new LinkedList<>();
         this.font = font;
     }
 
@@ -29,21 +27,19 @@ public class Line {
             maxHeightOfElement = currientfont.getSize();
         }
         glyphList.add(glyph);
-        string = String.valueOf(glyph.getSymbol());
     }
 
     public void deleteLastElement() {
         if (!glyphList.isEmpty()) {
-            glyphList.remove(glyphList.size() - 1);
+            glyphList.removeLast();
         }
     }
 
-
-    public List<Glyph> getGlyphList() {
+    public LinkedList<Glyph> getGlyphList() {
         return glyphList;
     }
 
-    public void setGlyphList(List<Glyph> glyphList) {
+    public void setGlyphList(LinkedList<Glyph> glyphList) {
         this.glyphList = glyphList;
     }
 
@@ -69,13 +65,5 @@ public class Line {
 
     public void setHeightGlyph(int heightGlyph) {
         this.heightGlyph = heightGlyph;
-    }
-
-    public String getString() {
-        return string;
-    }
-
-    public void setString(String string) {
-        this.string = string;
     }
 }

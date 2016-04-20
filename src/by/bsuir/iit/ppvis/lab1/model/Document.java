@@ -1,21 +1,21 @@
 package by.bsuir.iit.ppvis.lab1.model;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Created by TyZiK on 03.04.2016.
  */
 public class Document {
 
-    private List<Line> lineList;
-    private Font defaultFont;
     private Carriage carriage;
+    private LinkedList<Line> lineList;
+    private Font defaultFont;
 
     public Document() {
+        carriage = new Carriage();
         defaultFont = new Font("TimesNewRoman", 0, 10);
-        lineList = new ArrayList<>();
+        lineList = new LinkedList<>();
         lineList.add(new Line(defaultFont));
     }
 
@@ -23,11 +23,11 @@ public class Document {
         lineList.add(line);
     }
 
-    public List<Line> getLineList() {
+    public LinkedList<Line> getLineList() {
         return lineList;
     }
 
-    public void setLineList(List<Line> lineList) {
+    public void setLineList(LinkedList<Line> lineList) {
         this.lineList = lineList;
     }
 
@@ -37,6 +37,14 @@ public class Document {
 
     public void setDefaultFont(Font defaultFont) {
         this.defaultFont = defaultFont;
+    }
+
+    public Carriage getCarriage() {
+        return carriage;
+    }
+
+    public void setCarriage(Carriage carriage) {
+        this.carriage = carriage;
     }
 }
 

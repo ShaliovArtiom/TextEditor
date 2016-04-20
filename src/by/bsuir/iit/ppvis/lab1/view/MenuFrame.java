@@ -19,22 +19,6 @@ public class MenuFrame {
         frame.setTitle("TextEditor");
         frame.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
-//        Action fattyAction = new AbstractAction("fatty", new ImageIcon("fatty.jpeg")) {
-//            public void actionPerformed(ActionEvent e) {
-////                doc = new Document();
-////                doc.fatty();
-//            }
-//        };
-//
-//        Action italicsAction = new AbstractAction("italics", new ImageIcon("italics.jpeg")) {
-//            public void actionPerformed(ActionEvent e) {
-//            }
-//        };
-
-       // Action underlinedAction = new AbstractAction("underlined", new ImageIcon("underlined.jpeg")) {
-       //     public void actionPerformed(ActionEvent e) {
-       //     }
-       // };
 
         Action copyAction = new AbstractAction("Copy", new ImageIcon("copy.jpeg")) {
             public void actionPerformed(ActionEvent e) {
@@ -76,11 +60,11 @@ public class MenuFrame {
         toolBar.setPasteAction(pasteAction);
         toolBar.createToolBar(frame);
 
-        JScrollPane scrollPane = new JScrollPane(documentView);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        documentView.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
-        documentView.repaint();
-        frame.add(scrollPane);
+//        JScrollPane scrollPane = new JScrollPane(documentView);
+//        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//        documentView.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+//        documentView.repaint();
+//        frame.add(scrollPane);
     }
 
 

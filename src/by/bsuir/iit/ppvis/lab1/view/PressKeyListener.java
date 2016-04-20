@@ -21,16 +21,24 @@ public class PressKeyListener implements KeyListener {
         char keyChar = e.getKeyChar();
         glyph = new Glyph();
 
+
         if (keyChar == KeyEvent.VK_ENTER) {
             documentView.newLine();
         } else if (keyChar == KeyEvent.VK_BACK_SPACE) {
             documentView.backSpace();
-        } else documentView.inputText(keyChar, glyph);
+        } else
+        documentView.inputText(keyChar, glyph);
     }
 
 
     @Override
     public void keyPressed(KeyEvent e) {
+        int KeyCode = e.getKeyCode();
+
+        if(KeyCode == KeyEvent.VK_LEFT) documentView.carriageMoveLeft();
+        else if(KeyCode == KeyEvent.VK_RIGHT) documentView.carriageMoveRight();
+        else if(KeyCode == KeyEvent.VK_UP);
+        else if(KeyCode == KeyEvent.VK_DOWN);
 
     }
 
