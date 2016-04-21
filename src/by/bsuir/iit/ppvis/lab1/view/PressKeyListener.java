@@ -37,8 +37,8 @@ public class PressKeyListener implements KeyListener {
 
         if(KeyCode == KeyEvent.VK_LEFT) documentView.carriageMoveLeft();
         else if(KeyCode == KeyEvent.VK_RIGHT) documentView.carriageMoveRight();
-        else if(KeyCode == KeyEvent.VK_UP);
-        else if(KeyCode == KeyEvent.VK_DOWN);
+        else if(KeyCode == KeyEvent.VK_UP) documentView.carriageMoveUp();
+        else if(KeyCode == KeyEvent.VK_DOWN) documentView.carriageMoveDown();
 
     }
 

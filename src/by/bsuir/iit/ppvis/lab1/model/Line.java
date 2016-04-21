@@ -11,9 +11,11 @@ public class Line {
     private int maxHeightOfElement;
     private LinkedList<Glyph> glyphList;
     private Font font;
+    private boolean lineHaveCarriage;
 
 
     public Line(Font font) {
+        lineHaveCarriage = true;
         heightGlyph = 0;
         maxHeightOfElement = 0;
         glyphList = new LinkedList<>();
@@ -65,5 +67,13 @@ public class Line {
 
     public void setHeightGlyph(int heightGlyph) {
         this.heightGlyph = heightGlyph;
+    }
+
+    public boolean isLineHaveCarriage() {
+        return lineHaveCarriage;
+    }
+
+    public void setLineHaveCarriage(boolean lineHaveCarriage) {
+        this.lineHaveCarriage = lineHaveCarriage;
     }
 }
