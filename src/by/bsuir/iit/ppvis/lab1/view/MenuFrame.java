@@ -60,11 +60,11 @@ public class MenuFrame {
         toolBar.setPasteAction(pasteAction);
         toolBar.createToolBar(frame);
 
-//        JScrollPane scrollPane = new JScrollPane(documentView);
-//        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//        documentView.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
-//        documentView.repaint();
-//        frame.add(scrollPane);
+        JScrollPane scrollPane = new JScrollPane(documentView);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        documentView.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+        documentView.repaint();
+        frame.add(scrollPane);
     }
 
 

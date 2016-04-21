@@ -13,10 +13,15 @@ public class Document {
     private Font defaultFont;
 
     public Document() {
+        Glyph glyph = new Glyph();
+        glyph.setSymbol(' ');
         carriage = new Carriage();
         defaultFont = new Font("TimesNewRoman", 0, 10);
         lineList = new LinkedList<>();
-        lineList.add(new Line(defaultFont));
+        Line line = new Line(defaultFont);
+        lineList.add(line);
+        line.addGlyph(glyph);
+
     }
 
     public void newLine(Line line) {
