@@ -20,8 +20,7 @@ public class Document {
         lineList = new LinkedList<>();
         Line line = new Line(defaultFont);
         lineList.add(line);
-        line.addGlyph(glyph);
-
+        line.addGliphIndex(glyph, 0);
     }
 
     public void newLine(Line line) {

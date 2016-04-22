@@ -26,23 +26,24 @@ class DocumentView extends JPanel {
     public void inputText(char s, Glyph glyph) {
         if (document.getLineList().isEmpty()) {
             document = new Document();
-            LinkedList<Line> lineLinkedList = document.getLineList();
-            Line line = lineLinkedList.get(lineLinkedList.size() - 1);
-            LinkedList<Glyph> glyphLinkedList = line.getGlyphList();
-            Glyph g = new Glyph();
-            g.setSymbol(' ');
-            glyphLinkedList.addFirst(g);
         }
         if (document.getCarriage().getLastGlypgh() != null) {
             document.getCarriage().getLastGlypgh().setHaveCarriage(false);
         }
+
         glyph.setSymbol(s);
         LinkedList<Line> lineList = document.getLineList();
         Line line = lineList.get(lineList.size() - 1);
-        line.addGlyph(glyph);
+        LinkedList<Glyph> glyphList = line.getGlyphList();
+        if (glyphList.indexOf(document.getCarriage().getLastGlypgh()) != -1) {
+            line.addGliphIndex(glyph, glyphList.indexOf(document.getCarriage().getLastGlypgh()) + 1);
+        } else {
+                line.addGliphIndex(glyph, 1);
+            }
         line.getGlyphList().getFirst().setHaveCarriage(false);
         document.getCarriage().setLastGlypgh(glyph);
         glyph.setHaveCarriage(true);
+
         repaint();
     }
 
@@ -54,7 +55,7 @@ class DocumentView extends JPanel {
         Line newLine = new Line(line.getFont());
         line.getGlyphList().getFirst().setHaveCarriage(false);
         document.getCarriage().getLastGlypgh().setHaveCarriage(false);
-        newLine.addGlyph(glyph);
+        newLine.addGliphIndex(glyph, 0);
 //        line.setLineHaveCarriage(false);
         document.newLine(newLine);
         newLine.getGlyphList().getFirst().setHaveCarriage(true);
@@ -267,3 +268,17 @@ class DocumentView extends JPanel {
         return document;
     }
 }
+
+//        if (document.getCarriage().getLastGlypgh() != null) {
+//        int counter = 1;
+//        LinkedList<Line> lineLinkedList = document.getLineList();
+//        Line l = lineLinkedList.get(lineLinkedList.size() - counter);
+//
+//        LinkedList<Glyph> glyphLinkedList = l.getGlyphList();
+//        while (glyphLinkedList.indexOf(document.getCarriage().getLastGlypgh()) == -1) {
+//        counter++;
+//        line = lineLinkedList.get(lineLinkedList.size() - 1);
+//        glyphLinkedList = line.getGlyphList();
+//        }
+//
+//        }

@@ -23,13 +23,24 @@ public class Line {
 
     }
 
-    public void addGlyph(Glyph glyph) {
+//    public void addGlyph(Glyph glyph) {
+//        Font currientfont = new Font(font.getName(), font.getStyle(),font.getSize());
+//        glyph.setFont(currientfont);
+//        if (maxHeightOfElement < currientfont.getSize()) {
+//            maxHeightOfElement = currientfont.getSize();
+//        }
+//        glyphList.add(glyph);
+//    }
+
+    public void addGliphIndex(Glyph glyph, int index)
+    {
         Font currientfont = new Font(font.getName(), font.getStyle(),font.getSize());
         glyph.setFont(currientfont);
         if (maxHeightOfElement < currientfont.getSize()) {
             maxHeightOfElement = currientfont.getSize();
         }
-        glyphList.add(glyph);
+        glyphList.add(index, glyph);
+
     }
 
     public void deleteLastElement() {
