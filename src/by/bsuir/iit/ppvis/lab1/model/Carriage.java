@@ -17,6 +17,8 @@ public class Carriage {
         lastGlypgh = null;
     }
 
+
+
     public Glyph getLastGlypgh() {
         return lastGlypgh;
     }

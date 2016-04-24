@@ -18,6 +18,7 @@ public class Line {
         maxHeightOfElement = 0;
         glyphList = new LinkedList<>();
         this.font = font;
+        Glyph glyph = new Glyph();
     }
 
 //    public void addGlyph(Glyph glyph) {
