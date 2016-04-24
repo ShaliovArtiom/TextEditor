@@ -8,19 +8,16 @@ import java.util.LinkedList;
  */
 public class Document {
 
-    private Carriage carriage;
+   // private Carriage carriage;
     private LinkedList<Line> lineList;
     private Font defaultFont;
 
     public Document() {
-        Glyph glyph = new Glyph();
-        glyph.setSymbol(' ');
-        carriage = new Carriage();
+        //carriage = new Carriage();
         defaultFont = new Font("TimesNewRoman", 0, 10);
         lineList = new LinkedList<>();
         Line line = new Line(defaultFont);
         lineList.add(line);
-        line.addGliphIndex(glyph, 0);
     }
 
     public void newLine(Line line) {
@@ -43,12 +40,5 @@ public class Document {
         this.defaultFont = defaultFont;
     }
 
-    public Carriage getCarriage() {
-        return carriage;
-    }
-
-    public void setCarriage(Carriage carriage) {
-        this.carriage = carriage;
-    }
 }
 

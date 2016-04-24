@@ -10,15 +10,17 @@ import java.util.LinkedList;
 
 class DocumentView extends JPanel {
 
+    private CarriageView carriageView;
     private Document document;
     private String string;
-    private String carriage;
+    private String stringCarriage;
     private int distanceBetweenGlyph;
     private int heightGlyph;
 
     public DocumentView() {
         this.setBackground(Color.WHITE);
         document = new Document();
+        carriageView = new CarriageView();
         this.addMouseListener(new MouseFocus(this));
         this.addKeyListener(new PressKeyListener(this));
     }
@@ -28,43 +30,61 @@ class DocumentView extends JPanel {
         if (document.getLineList().isEmpty()) {
             document = new Document();
         }
-        if (document.getCarriage().getLastGlypgh() != null) {
-            document.getCarriage().getLastGlypgh().setHaveCarriage(false);
+        if (carriageView.getCarriage().getLastGlypgh() != null) {
+            carriageView.getCarriage().getLastGlypgh().setHaveCarriage(false);
         }
 
         glyph.setSymbol(s);
         LinkedList<Line> lineList = document.getLineList();
         Line line = lineList.get(lineList.size() - 1);
-        while (line.isLineHaveCarriage() != true) {
+        if(lineList.indexOf(lineList.size() - 1) > 0)
+        while (line.findCarriage() != true) {
             counter++;
             line = lineList.get(lineList.size() - counter);
         }
         LinkedList<Glyph> glyphList = line.getGlyphList();
-        if (glyphList.indexOf(document.getCarriage().getLastGlypgh()) != -1) {
-            line.addGliphIndex(glyph, glyphList.indexOf(document.getCarriage().getLastGlypgh()) + 1);
+        if (glyphList.indexOf(carriageView.getCarriage().getLastGlypgh()) != -1) {
+            line.addGliphIndex(glyph, glyphList.indexOf(carriageView.getCarriage().getLastGlypgh()) + 1);
         } else {
-            line.addGliphIndex(glyph, 1);
+            line.addGliphIndex(glyph, 0);
         }
         line.getGlyphList().getFirst().setHaveCarriage(false);
-        document.getCarriage().setLastGlypgh(glyph);
+        carriageView.getCarriage().setLastGlypgh(glyph);
         glyph.setHaveCarriage(true);
 
         repaint();
     }
 
     public void newLine() {
-        Glyph glyph = new Glyph();
-        glyph.setSymbol(' ');
         LinkedList<Line> lineLinkedList = document.getLineList();
         Line line = lineLinkedList.get(lineLinkedList.size() - 1);
-        Line newLine = new Line(line.getFont());
-        line.getGlyphList().getFirst().setHaveCarriage(false);
-        document.getCarriage().getLastGlypgh().setHaveCarriage(false);
-        newLine.addGliphIndex(glyph, 0);
-        line.setLineHaveCarriage(false);
-        document.newLine(newLine);
-        newLine.getGlyphList().getFirst().setHaveCarriage(true);
-        newLine.setHeightGlyph(heightGlyph);
+        if (carriageView.getCarriage().getLastGlypgh() == line.getGlyphList().getLast()) {
+            Line newLine = new Line(line.getFont());
+            carriageView.getCarriage().getLastGlypgh().setHaveCarriage(false);
+            document.newLine(newLine);
+            newLine.setHeightGlyph(heightGlyph);
+        } else {
+            int x = line.getGlyphList().indexOf(carriageView.getCarriage().getLastGlypgh()) + 1;
+            LinkedList<Glyph> glyphLinkedList = line.getGlyphList();
+            LinkedList<Glyph> glyphs = new LinkedList<>();
+            for (int i = 0; i < glyphLinkedList.size(); i++) {
+                if (glyphLinkedList.get(i) == glyphLinkedList.get(x)) {
+                    glyphs.add(glyphLinkedList.get(i));
+                    x = i + 1;
+                }
+            }
+            for (int i = 0; i < glyphs.size(); i++) {
+                glyphLinkedList.removeLast();
+            }
+            Line newLine = new Line(line.getFont());
+            carriageView.getCarriage().getLastGlypgh().setHaveCarriage(false);
+            newLine.setGlyphList(glyphs);
+            document.newLine(newLine);
+            carriageView.getCarriage().setLastGlypgh(glyphs.getFirst());
+            carriageView.getCarriage().getLastGlypgh().setHaveCarriage(true);
+            newLine.setHeightGlyph(heightGlyph);
+            lineLinkedList.getLast().getGlyphList().getLast().setHaveCarriage(false);
+        }
         repaint();
     }
 
@@ -73,25 +93,23 @@ class DocumentView extends JPanel {
         LinkedList<Line> lineLinkedList = document.getLineList();
         Line line = lineLinkedList.get(lineLinkedList.size() - counter);
         LinkedList<Glyph> glyphLinkedList = line.getGlyphList();
-        while (glyphLinkedList.indexOf(document.getCarriage().getLastGlypgh()) == -1) {
+        while (glyphLinkedList.indexOf(carriageView.getCarriage().getLastGlypgh()) == -1) {
             counter++;
             line = lineLinkedList.get(lineLinkedList.size() - counter);
             glyphLinkedList = line.getGlyphList();
         }
-        if (glyphLinkedList.indexOf(document.getCarriage().getLastGlypgh()) != 0) {
-            int positionCarriageHorisontal = glyphLinkedList.indexOf(document.getCarriage().getLastGlypgh()) - 1;
+        if (glyphLinkedList.indexOf(carriageView.getCarriage().getLastGlypgh()) != 0) {
+            int positionCarriageHorisontal = glyphLinkedList.indexOf(carriageView.getCarriage().getLastGlypgh()) - 1;
             glyphLinkedList.get(positionCarriageHorisontal).setHaveCarriage(true);
-            document.getCarriage().getLastGlypgh().setHaveCarriage(false);
-            document.getCarriage().setLastGlypgh(glyphLinkedList.get(positionCarriageHorisontal));
+            carriageView.getCarriage().getLastGlypgh().setHaveCarriage(false);
+            carriageView.getCarriage().setLastGlypgh(glyphLinkedList.get(positionCarriageHorisontal));
         } else if (line != lineLinkedList.getFirst()) {
             int positionCarriageVertical = lineLinkedList.indexOf(line) - 1;
-            line.setLineHaveCarriage(false);
             Line l = lineLinkedList.get(positionCarriageVertical);
             LinkedList<Glyph> glyphList = l.getGlyphList();
-            document.getCarriage().getLastGlypgh().setHaveCarriage(false);
-            document.getCarriage().setLastGlypgh(glyphList.getLast());
+            carriageView.getCarriage().getLastGlypgh().setHaveCarriage(false);
+            carriageView.getCarriage().setLastGlypgh(glyphList.getLast());
             glyphList.getLast().setHaveCarriage(true);
-            l.setLineHaveCarriage(true);
         }
         repaint();
     }
@@ -102,25 +120,23 @@ class DocumentView extends JPanel {
         Line line = lineLinkedList.get(lineLinkedList.size() - counter);
 
         LinkedList<Glyph> glyphLinkedList = line.getGlyphList();
-        while (glyphLinkedList.indexOf(document.getCarriage().getLastGlypgh()) == -1) {
+        while (glyphLinkedList.indexOf(carriageView.getCarriage().getLastGlypgh()) == -1) {
             counter++;
             line = lineLinkedList.get(lineLinkedList.size() - counter);
             glyphLinkedList = line.getGlyphList();
         }
-        int positionCarriageHorisontal = glyphLinkedList.indexOf(document.getCarriage().getLastGlypgh()) + 1;
+        int positionCarriageHorisontal = glyphLinkedList.indexOf(carriageView.getCarriage().getLastGlypgh()) + 1;
         if (positionCarriageHorisontal < glyphLinkedList.size()) {
             glyphLinkedList.get(positionCarriageHorisontal).setHaveCarriage(true);
-            document.getCarriage().getLastGlypgh().setHaveCarriage(false);
-            document.getCarriage().setLastGlypgh(glyphLinkedList.get(positionCarriageHorisontal));
+            carriageView.getCarriage().getLastGlypgh().setHaveCarriage(false);
+            carriageView.getCarriage().setLastGlypgh(glyphLinkedList.get(positionCarriageHorisontal));
         } else if (line != lineLinkedList.getLast()) {
             positionCarriageHorisontal = lineLinkedList.indexOf(line) + 1;
-            line.setLineHaveCarriage(false);
             Line l = lineLinkedList.get(positionCarriageHorisontal);
             LinkedList<Glyph> glyphList = l.getGlyphList();
-            document.getCarriage().getLastGlypgh().setHaveCarriage(false);
-            document.getCarriage().setLastGlypgh(glyphList.getFirst());
+            carriageView.getCarriage().getLastGlypgh().setHaveCarriage(false);
+            carriageView.getCarriage().setLastGlypgh(glyphList.getFirst());
             glyphList.getFirst().setHaveCarriage(true);
-            l.setLineHaveCarriage(true);
         }
         repaint();
 
@@ -132,25 +148,23 @@ class DocumentView extends JPanel {
         Line line = lineLinkedList.get(lineLinkedList.size() - counter);
 
         LinkedList<Glyph> glyphLinkedList = line.getGlyphList();
-        while (glyphLinkedList.indexOf(document.getCarriage().getLastGlypgh()) == -1) {
+        while (glyphLinkedList.indexOf(carriageView.getCarriage().getLastGlypgh()) == -1) {
             counter++;
             line = lineLinkedList.get(lineLinkedList.size() - counter);
             glyphLinkedList = line.getGlyphList();
         }
         if (line != lineLinkedList.getFirst()) {
             int positionCarriageVertical = lineLinkedList.indexOf(line) - 1;
-            line.setLineHaveCarriage(false);
             Line l = lineLinkedList.get(positionCarriageVertical);
 
-            int positionCarriageHorisontal = glyphLinkedList.indexOf(document.getCarriage().getLastGlypgh());
-            document.getCarriage().getLastGlypgh().setHaveCarriage(false);
+            int positionCarriageHorisontal = glyphLinkedList.indexOf(carriageView.getCarriage().getLastGlypgh());
+            carriageView.getCarriage().getLastGlypgh().setHaveCarriage(false);
             LinkedList<Glyph> glyphList = l.getGlyphList();
             if (positionCarriageHorisontal > glyphList.size() - 1) {
                 positionCarriageHorisontal = glyphList.size() - 1;
             }
             glyphList.get(positionCarriageHorisontal).setHaveCarriage(true);
-            document.getCarriage().setLastGlypgh(glyphList.get(positionCarriageHorisontal));
-            l.setLineHaveCarriage(true);
+            carriageView.getCarriage().setLastGlypgh(glyphList.get(positionCarriageHorisontal));
         }
         repaint();
     }
@@ -161,65 +175,85 @@ class DocumentView extends JPanel {
         Line line = lineLinkedList.get(lineLinkedList.size() - counter);
 
         LinkedList<Glyph> glyphLinkedList = line.getGlyphList();
-        while (glyphLinkedList.indexOf(document.getCarriage().getLastGlypgh()) == -1) {
+        while (glyphLinkedList.indexOf(carriageView.getCarriage().getLastGlypgh()) == -1) {
             counter++;
             line = lineLinkedList.get(lineLinkedList.size() - counter);
             glyphLinkedList = line.getGlyphList();
         }
         if (line != lineLinkedList.getLast()) {
             int positionCarriageVertcal = lineLinkedList.indexOf(line) + 1;
-            line.setLineHaveCarriage(false);
             Line l = lineLinkedList.get(positionCarriageVertcal);
-            int positionCarriageHorisontal = glyphLinkedList.indexOf(document.getCarriage().getLastGlypgh());
-            document.getCarriage().getLastGlypgh().setHaveCarriage(false);
+            int positionCarriageHorisontal = glyphLinkedList.indexOf(carriageView.getCarriage().getLastGlypgh());
+            carriageView.getCarriage().getLastGlypgh().setHaveCarriage(false);
             LinkedList<Glyph> glyphList = l.getGlyphList();
             if (positionCarriageHorisontal > glyphList.size() - 1) {
                 positionCarriageHorisontal = glyphList.size() - 1;
             }
             glyphList.get(positionCarriageHorisontal).setHaveCarriage(true);
-            document.getCarriage().setLastGlypgh(glyphList.get(positionCarriageHorisontal));
-            l.setLineHaveCarriage(true);
+            carriageView.getCarriage().setLastGlypgh(glyphList.get(positionCarriageHorisontal));
         }
         repaint();
     }
 
     public void backSpace() {
-        document.getCarriage().getLastGlypgh().setHaveCarriage(false);
         int maxHeightGlyphBakcspace = 0;
         if (!document.getLineList().isEmpty()) {
             LinkedList<Line> lineLinkedList = document.getLineList();
             Line line = lineLinkedList.get(lineLinkedList.size() - 1);
+//            carriageView.getCarriage().getLastGlypgh().setHaveCarriage(false);
             for (Glyph g : line.getGlyphList()) {
                 if (maxHeightGlyphBakcspace < g.getFont().getSize()) {
                     maxHeightGlyphBakcspace = g.getFont().getSize();
                 }
                 line.setMaxHeightOfElement(maxHeightGlyphBakcspace);
             }
-            line.deleteLastElement();
-            if (line.getGlyphList().isEmpty()) {
-                document.getCarriage().setLastGlypgh(null);
-            } else {
-                document.getCarriage().setLastGlypgh(line.getGlyphList().get(line.getGlyphList().size() - 1));
-                line.getGlyphList().get(line.getGlyphList().size() - 1).setHaveCarriage(true);
-            }
-
-            if (line.getGlyphList().isEmpty()) {
-                line.deleteLastElement();
-                lineLinkedList.removeLast();
-                if (lineLinkedList.isEmpty()) {
-                    document = new Document();
-                } else {
-                    Line l = document.getLineList().getLast();
-                    LinkedList<Glyph> glyphList = l.getGlyphList();
-                    document.getCarriage().setLastGlypgh(glyphList.getLast());
-                    glyphList.getLast().setHaveCarriage(true);
-                    l.setLineHaveCarriage(true);
+            int x = line.getGlyphList().indexOf(carriageView.getCarriage().getLastGlypgh()) - 1;
+            if (x >= 0) {
+                line.getGlyphList().get(x).setHaveCarriage(true);
+                line.deleteGliphIndex(line.getGlyphList().indexOf(carriageView.getCarriage().getLastGlypgh())); //////////
+                    carriageView.getCarriage().setLastGlypgh(line.getGlyphList().get(x));
+                    //   line.getGlyphList().get(line.getGlyphList().size() - 1).setHaveCarriage(true);
                 }
-            }
-            repaint();
-        }
-    }
+//            else {
+//                carriageView.getCarriage().setLastGlypgh(null);
+//            }
+                if (carriageView.getCarriage().getLastGlypgh() == line.getGlyphList().getFirst()) {
+                    line.deleteLastElement();
+                    lineLinkedList.removeLast();
+                    if (lineLinkedList.isEmpty()) {
+                        document = new Document();
+                    } else {
+                        Line l = document.getLineList().getLast();
+                        LinkedList<Glyph> glyphList = l.getGlyphList();
+                        System.out.print("a");
+                        carriageView.getCarriage().setLastGlypgh(glyphList.getLast());
+                        glyphList.getLast().setHaveCarriage(true);
+                    }
+                }
 
+                repaint();
+            }
+        }
+
+    public void carriageMoveMouse(int x, int y)
+    {
+        LinkedList<Line> lineLinkedList = document.getLineList();
+        LinkedList<Glyph> glyphLinkedList = new LinkedList<>();
+        for (Line line : lineLinkedList) {
+            if (y <= line.getHeightGlyph() && y >= line.getHeightGlyph() - line.getMaxHeightOfElement()) {
+                glyphLinkedList = line.getGlyphList();
+            }
+        }
+        for (Glyph glyph : glyphLinkedList) {
+            if(x >= glyph.getX() && x <= glyph.getX() + glyph.getWhight() && y <= glyph.getY() + glyph.getHight() && y <= glyph.getY())
+            {
+                carriageView.getCarriage().getLastGlypgh().setHaveCarriage(false);
+                carriageView.getCarriage().setLastGlypgh(glyph);
+                glyph.setHaveCarriage(true);
+            }
+        }
+        repaint();
+    }
 
     private void moveScrollPane(Graphics2D g2) {
         if (distanceBetweenGlyph > this.getWidth()) {
@@ -234,27 +268,34 @@ class DocumentView extends JPanel {
 
 
     private void drawGliph(Graphics2D g2, Line line) {
-        carriage = String.valueOf(document.getCarriage().getCarriage());
+        stringCarriage = String.valueOf(carriageView.getCarriage().getCarriage());
         LinkedList<Glyph> glyphLinkedList = line.getGlyphList();
-        if (document.getCarriage().getLastGlypgh() == null) {
-            g2.drawString(carriage, 1, 10);
-        }
+//        if (carriageView.getCarriage().getLastGlypgh() == null) {
+//            g2.drawString(stringCarriage, 1, 10);
+//        }
 
         for (Glyph glyph : glyphLinkedList) {
             string = String.valueOf(glyph.getSymbol());
-            drawCarriage(g2, glyph);
             g2.setFont(glyph.getFont());
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.drawString(string, distanceBetweenGlyph, heightGlyph);
-            distanceBetweenGlyph += g2.getFontMetrics().stringWidth(string);
+            glyph.setWhight(g2.getFontMetrics().stringWidth(string));
+            glyph.setHight(line.getMaxHeightOfElement());
+            glyph.setX(distanceBetweenGlyph);
+            glyph.setY(heightGlyph);
 
+            drawCarriage(g2, glyph, glyph.getX(), glyph.getY());
+            g2.drawString(string, glyph.getX(), glyph.getY());
+
+            distanceBetweenGlyph += g2.getFontMetrics().stringWidth(string);
         }
     }
 
-    private void drawCarriage(Graphics2D g2, Glyph glyph) {
+    private void drawCarriage(Graphics2D g2, Glyph glyph, int x, int y) {
 
         if (glyph.isHaveCarriage()) {
-            g2.drawString(carriage, distanceBetweenGlyph + glyph.getFont().getSize() / 3, heightGlyph + 1);
+            carriageView.getCarriage().setFont(glyph.getFont());
+            g2.setFont(carriageView.getCarriage().getFont());
+            g2.drawString(stringCarriage, x, y);
         }
     }
 
@@ -264,7 +305,7 @@ class DocumentView extends JPanel {
         Graphics2D g2 = (Graphics2D) gr;
         distanceBetweenGlyph = 1;
         for (Line line : document.getLineList()) {
-            heightGlyph = line.getMaxHeightOfElement();
+            heightGlyph = line.getHeightGlyph();
             drawGliph(g2, line);
             moveScrollPane(g2);
         }

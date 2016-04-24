@@ -10,6 +10,15 @@ public class Glyph {
     private boolean selected;
     private char symbol;
     private Font font;
+    private int x;
+    private int y;
+    private int whight;
+    private int hight;
+
+    public Glyph() {
+        x = 1;
+        y = 1;
+    }
 
     public char getSymbol() {
         return symbol;
@@ -41,5 +50,37 @@ public class Glyph {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getWhight() {
+        return whight;
+    }
+
+    public void setWhight(int whight) {
+        this.whight = whight;
+    }
+
+    public int getHight() {
+        return hight;
+    }
+
+    public void setHight(int hight) {
+        this.hight = hight;
     }
 }

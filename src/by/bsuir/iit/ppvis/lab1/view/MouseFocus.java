@@ -6,6 +6,8 @@ import java.awt.event.MouseListener;
 
 public class MouseFocus implements MouseListener {
     private DocumentView documentView;
+    private int x;
+    private int y;
 
     public MouseFocus(DocumentView documentView) {
         this.documentView = documentView;
@@ -14,9 +16,7 @@ public class MouseFocus implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e)
     {
-
         documentView.requestFocusInWindow();
-
     }
 
     @Override
@@ -26,7 +26,9 @@ public class MouseFocus implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        x = e.getX();
+        y = e.getY();
+        documentView.carriageMoveMouse(x, y);
     }
 
     @Override

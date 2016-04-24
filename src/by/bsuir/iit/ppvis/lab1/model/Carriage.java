@@ -6,7 +6,7 @@ import java.awt.*;
  * Created by TyZiK on 04.04.2016.
  */
 public class Carriage {
-    private char carriage;
+    private char carriage; // создать новую View
     private Glyph lastGlypgh;
     private boolean visibleCarriage;
     private Font font;
@@ -39,5 +39,13 @@ public class Carriage {
 
     public void setVisibleCarriage(boolean visibleCarriage) {
         this.visibleCarriage = visibleCarriage;
+    }
+
+    public Font getFont() {
+        return font;
+    }
+
+    public void setFont(Font font) {
+        this.font = font;
     }
 }

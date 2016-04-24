@@ -11,16 +11,13 @@ public class Line {
     private int maxHeightOfElement;
     private LinkedList<Glyph> glyphList;
     private Font font;
-    private boolean lineHaveCarriage;
 
 
     public Line(Font font) {
-        lineHaveCarriage = true;
         heightGlyph = 0;
         maxHeightOfElement = 0;
         glyphList = new LinkedList<>();
         this.font = font;
-
     }
 
 //    public void addGlyph(Glyph glyph) {
@@ -32,15 +29,27 @@ public class Line {
 //        glyphList.add(glyph);
 //    }
 
-    public void addGliphIndex(Glyph glyph, int index)
-    {
-        Font currientfont = new Font(font.getName(), font.getStyle(),font.getSize());
+    public void addGliphIndex(Glyph glyph, int index) {
+        Font currientfont = new Font(font.getName(), font.getStyle(), font.getSize());
         glyph.setFont(currientfont);
         if (maxHeightOfElement < currientfont.getSize()) {
             maxHeightOfElement = currientfont.getSize();
         }
         glyphList.add(index, glyph);
 
+    }
+
+    public boolean findCarriage() {
+        for (Glyph glyph : glyphList) {
+            if (glyph.isHaveCarriage()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void deleteGliphIndex(int index) {
+        glyphList.remove(index);
     }
 
     public void deleteLastElement() {
@@ -66,7 +75,7 @@ public class Line {
     }
 
     public int getMaxHeightOfElement() {
-        return maxHeightOfElement + heightGlyph;
+        return maxHeightOfElement;
     }
 
     public void setMaxHeightOfElement(int maxHeightOfElement) {
@@ -74,18 +83,10 @@ public class Line {
     }
 
     public int getHeightGlyph() {
-        return heightGlyph;
+        return heightGlyph + maxHeightOfElement;
     }
 
     public void setHeightGlyph(int heightGlyph) {
         this.heightGlyph = heightGlyph;
-    }
-
-    public boolean isLineHaveCarriage() {
-        return lineHaveCarriage;
-    }
-
-    public void setLineHaveCarriage(boolean lineHaveCarriage) {
-        this.lineHaveCarriage = lineHaveCarriage;
     }
 }
